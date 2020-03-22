@@ -1,22 +1,10 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect, HttpResponse
+
 
 def accueil(request):
-    return HttpResponse("Vous êtes sur la page d'accueil de fenouil.io")
+    return render(request, 'fenouil/index.html')
 
 def login(request):
     return HttpResponse("Vous êtes sur la page de connexion.")
-
-def register(request):
-        # if request.method == 'POST':
-        #     form = UserCreationForm(request.POST)
-        #     if form.is_valid():
-        #         form.save()
-        #         return redirect('')
-        # else:
-        #     form = UserCreationForm()
-        #
-        #     args = {'form : form'}
-        return render(request, 'fenouil/register.html')
-
-

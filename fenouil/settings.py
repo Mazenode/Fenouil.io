@@ -71,6 +71,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'fenouil.wsgi.application'
 
 
