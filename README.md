@@ -28,8 +28,8 @@ python manage.py runserver
 ```
 Après ça il vous propose le lien : http://127.0.0.1:8000/, vous cliquez dessus et vous êtes sur le site.
 
-Pour vous deplacez sur le site il faut modifier directement l'url, par exemple je veux aller sur la page login, je change
-http://127.0.0.1:8000/ en http://127.0.0.1:8000/login.html.
+Pour vous deplacez sur le site il faut modifier directement l'url, par exemple je veux aller sur la page register, je change
+http://127.0.0.1:8000/ en http://127.0.0.1:8000/register.html.
 
 ## Utilisation de la base de données
 Le meilleur outil pour visualiser une base de donnée postgreSQL c'est pgAdmin4. Il faut le telecharger et ajouter un nouveau serveur en rentrant les codes que je vous ai envoyés dans la conv Telegram.
