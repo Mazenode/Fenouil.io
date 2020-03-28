@@ -1,0 +1,66 @@
+{% extends 'fenouil/register.html' %}
+
+{% block form %}
+    <form action="register" role="form" method="post">
+            {% csrf_token %}
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    </div>
+                    <input id="nom" class="form-control" name="last_name"  placeholder="Nom" type="text" maxlength="50" required>
+                  </div>
+
+                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    </div>
+                    <input id="prenom" class="form-control" name="first_name" placeholder="Pr&eacute;nom" type="text" maxlength="50" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                    <input id="mail" class="form-control" name="username" placeholder="Email" type="email" maxlength="50" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input id="mdp1" class="form-control" name="password1" placeholder="Mot de passe" type="password" maxlength="50" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input id="mdp2" class="form-control" name="password2" placeholder="Confirmer le mot de passe" type="password" maxlength="50" required>
+                  </div>
+                </div>
+
+              <div class="row my-4">
+                  <div class="col-12">
+                    <div class="custom-control custom-control-alternative custom-checkbox">
+                      <input class="custom-control-input" name="check" id="customCheckRegister" type="checkbox">
+                      <label class="custom-control-label" for="customCheckRegister">
+                        <span class="text-muted">Je suis d'accord avec la <a href="charte">Politique de confidentialit&eacute;</a></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="Submit" class="btn btn-primary mt-4">Cr&eacute;er compte</button>
+                </div>
+              </form>
+
+    <div>
+        {% for message in messages %}
+        <h3 style="color: #a11918; margin-left: 2em; margin-top: 2em ">{{ message }}</h3>
+        {% endfor %}
+    </div>
+{% endblock form %}
