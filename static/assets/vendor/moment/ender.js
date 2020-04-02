@@ -1,1 +1,1 @@
-$.ender({ moment: require('static/assets/vendor/moment/moment') })
+$.ender({ moment: require('moment') })

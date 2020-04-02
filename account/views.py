@@ -1,7 +1,18 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.core.mail import send_mail
+
 # Create your views here.
+
+def reset(request):
+    send_mail(
+        'Demande de nouveau mot de passe',
+        'Bonjour Quentin, Réinitialisons votre mot de passe afin que vous puissiez continuer à utiliser notre application.',
+        'admin@webee.com',
+        ['to@example.com'],
+        fail_silently=False,
+    )
 
 def logout(request):
     auth.logout(request)
