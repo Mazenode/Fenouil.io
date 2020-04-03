@@ -198,8 +198,7 @@
 
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">Nouvel article</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filtrer</a>
+
             </div>
           </div>
         </div>
@@ -215,230 +214,16 @@
             </div>
             <div class="card-body">
               <div class="row icon-examples">
+                {% for item in items %}
                 <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="active-40" title="Marteau rivoir fibre de verre STANLEY, 0.5 kg">
+                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bus-front-12" title="{{ item.titre }}">
                     <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Marteau.PNG" style="width: 2em">
-                      <span>Marteau rivoir fibre de verre STANLEY, 0.5 kg</span>
+                      <img alt="{{ item.titre}}" src="{{ item.photo.url }}" style="width: 2em">
+                      <span>{{ item.titre}} - {{ item.prix}}</span>
                     </div>
                   </button>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="air-baloon" title="Marteau arrache-clous acier STANLEY, 0.6 kg">
-                    <div>
-                     <img alt="Marteau" src="../assets/img/icons/articles/Marteau2.jfif" style="width: 2em">
-                      <span>Marteau arrache-clous acier STANLEY, 0.6 kg</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="album-2" title="Pomme De Douche à Main Avec Tuyau Douche 2M En Inox">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Pommeau.jpg" style="width: 2em">
-                      <span>Pomme De Douche à Main Avec Tuyau Douche 2M En Inox</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="align-center" title="Prise avec terre complet, LEGRAND Niloé, blanc">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Prise1.jfif" style="width: 2em">
-                      <span>Prise avec terre complet, LEGRAND Niloé, blanc</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="align-left-2" title="Kit d'outils 108 pièces pièces DEXTER">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Kit1.jfif" style="width: 2em">
-                      <span>Kit d'outils 108 pièces pièces DEXTER</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="ambulance" title="Pistolet pour cartouche DEXTER, acier, noir">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Glue1.jfif" style="width: 2em">
-                      <span>Pistolet pour cartouche DEXTER, acier, noir</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="app" title="Mètre déroulant caoutchouc et plastique STANLEY Stht0-36117 5 m">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Metre1.jfif" style="width: 2em">
-                      <span>Mètre déroulant caoutchouc et plastique STANLEY Stht0-36117 5 m</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="archive-2" title="Peinture banana 6 satin LUXENS 2.5 l">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Peinture.jpg" style="width: 2em">
-                      <span>Peinture banana 6 satin LUXENS 2.5 l</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="atom" title="Lime mi-ronde ou cabinette bâtarde BAHCO, 200 mm">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Lime.jfif" style="width: 2em">
-                      <span>Lime mi-ronde ou cabinette bâtarde BAHCO, 200 mm</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="badge" title="Pince à riveter alu 3.2/4/4.8">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Rivets.jfif" style="width: 2em">
-                      <span>Pince à riveter alu 3.2/4/4.8</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bag-17" title="Tournevis, L.130 mm FACOM">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Tournevis.jfif" style="width: 2em">
-                      <span>Tournevis, L.130 mm FACOM</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="basket" title="Pinceau plat pour peindre, 40 mm">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Pinceau.jpg" style="width: 2em">
-                      <span>Pinceau plat pour peindre, 40 mm</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bell-55" title="Brosse Boisseau pour métal BOSCH PROFESSIONAL, Diam.50 mm, 2608622022">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Brosse.jfif" style="width: 2em">
-                      <span>Brosse Boisseau pour métal BOSCH PROFESSIONAL, Diam.50 mm, 2608622022</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bold-down" title="Humidificateur d'air Limpia 6 OLIMPIA SPLENDID 7.9 l/jour">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Humidificateur.jpg" style="width: 2em">
-                      <span>Humidificateur d'air Limpia 6 OLIMPIA SPLENDID 7.9 l/jour</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bold-left" title="Niveau laser 360° STANLEY Multilignes cross + trepied stht77641-1">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Laser.jfif" style="width: 2em">
-                      <span>Niveau laser 360° STANLEY Multilignes cross + trepied stht77641-1</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bold-right" title="Lot de 500 lot de 500 vis argent STANDERS pozidriv tête fraisée">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Vis1.jfif" style="width: 2em">
-                      <span>Lot de 500 lot de 500 vis argent STANDERS pozidriv tête fraisée</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bold-up" title="Perceuse à percussion filaire BOSCH PROFESSIONAL Gsb 24-2, 1100 W">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Perceuse.jfif" style="width: 2em">
-                      <span>Perceuse à percussion filaire BOSCH PROFESSIONAL Gsb 24-2, 1100 W</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bold" title="Tondeuse autoportée éjection arrière MTD 92BS 344 cm³ l.92 cm">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Tondeuse.jfif" style="width: 2em">
-                      <span>Tondeuse autoportée éjection arrière MTD 92BS 344 cm³ l.92 cm</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="book-bookmark" title="Scie spécial stratifié DEXTER 450 mm">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Scie1.jfif" style="width: 2em">
-                      <span>Scie spécial stratifié DEXTER 450 mm</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="books" title="Lot de 6 ampoules led opaque standard E27 806 Lm = 60 W blanc neutre, LEXMAN">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Ampoules.jfif" style="width: 2em">
-                      <span>Lot de 6 ampoules led opaque standard E27 806 Lm = 60 W blanc neutre, LEXMAN</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="box-2" title="Tube halogène 120W = 2137Lm (équiv. 155W) R7S 78 mm 2900K LEXMAN">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Tube.jfif" style="width: 2em">
-                      <span>Tube halogène 120W = 2137Lm (équiv. 155W) R7S 78 mm 2900K LEXMAN</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="briefcase-24" title="Cylindre de serrure débrayable L.40+40 mm STANDERS, modèle rouge">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Verrou.jfif" style="width: 2em">
-                      <span>Cylindre de serrure débrayable L.40+40 mm STANDERS, modèle rouge</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="building" title="Lot de 50 ecrous indesserrable acier, Diam.8 mm STANDERS">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Ecrou.jpg" style="width: 2em">
-                      <span>Lot de 50 ecrous indesserrable acier, Diam.8 mm STANDERS</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bulb-61" title="Tableau électrique équipé et précâblé SCHNEIDER ELECTRIC 1 rangée 13 modules">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Tableau.jpg" style="width: 2em">
-                      <span>Tableau électrique équipé et précâblé SCHNEIDER ELECTRIC 1 rangée 13 modules</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bullet-list-67" title="Gants de manutention en cuir DEXTER, taille 9 / L ">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Gants.jfif" style="width: 2em">
-                      <span>Gants de manutention en cuir DEXTER, taille 9 / L </span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="bus-front-12" title="Lot de 3 masques antipoussière FFP2 3M">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Masque.jfif" style="width: 2em">
-                      <span>Lot de 3 masques antipoussière FFP2 3M</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="button-pause" title="Tronçonneuse à essence STIHL Ms 170 30.1 cc">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Tronconeuse.jfif" style="width: 2em">
-                      <span>Tronçonneuse à essence STIHL Ms 170 30.1 cc</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-icon-clipboard" data-clipboard-text="button-play" title="Barbecue électrique WEBER Q 2400, gris anthracite">
-                    <div>
-                      <img alt="Marteau" src="../assets/img/icons/articles/Barbecue.jpg" style="width: 2em">
-                      <span>Barbecue électrique WEBER Q 2400, gris anthracite</span>
-                    </div>
-                  </button>
-                </div>
+                {% endfor %}
               </div>
             </div>
           </div>
