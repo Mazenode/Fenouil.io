@@ -9,6 +9,7 @@ urlpatterns = [
     path('articles/', views.articles, name="articles"),
     path('client/', views.client, name="client"),
     path('login/', views.login, name='login'),
+    path('envoyer_publicite/', views.envoyer_publicite, name='envoyer_publicite'),
     path('accounts/', include('account.urls')),
 ]
 

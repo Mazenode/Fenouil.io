@@ -15,6 +15,7 @@ class Client(models.Model):
     nom = models.CharField(max_length=50)
     mail = models.EmailField(max_length=80)
     adresse = models.CharField(max_length=150)
+    num = models.IntegerField(default=0)
     ville = models.CharField(max_length=50)
     code_postal = models.IntegerField()
     pays = models.CharField(max_length=50)

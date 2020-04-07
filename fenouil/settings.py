@@ -24,6 +24,7 @@ SECRET_KEY = '=!e_ig(pa92(*es@hgp1au)se1(p%l!v%flo)xgkm9trc-pev8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#'192.168.1.28'
 ALLOWED_HOSTS = []
 
 #Ajoute le css, les images etc
@@ -86,12 +87,8 @@ WSGI_APPLICATION = 'fenouil.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fcawntpv',
-        'USER': 'fcawntpv',
-        'PASSWORD': '81H54f9ta3zqQ6dnh-VH5erpnljCHUnT',
-        'HOST': 'kandula.db.elephantsql.com',
-        'PORT': '5432'
+        'ENGINE' : 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
