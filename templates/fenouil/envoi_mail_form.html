@@ -1,0 +1,78 @@
+{% extends 'fenouil/envoi_mail.html' %}
+{% load static %}
+{% block form %}
+<form method="post">
+    {% csrf_token %}
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10">
+                <h3 class="mb-0">Envoyer une publicité via mail</h3>
+            </div>
+        </div>
+    </div>
+    <!-- Card body -->
+    <div class="card-body">
+
+        <!-- Input groups with icon -->
+        <div class="row">
+            <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                          </div>
+                          <input name="mail" class="form-control" placeholder="À" type="email">
+                        </div>
+                      </div>
+                    </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select class="form-control" data-toggle="select" name="mail2">
+                    <option>Ou choisir le mail d'un de vos clients</option>
+                         {% for client in clients %}
+                             <option>{{ client.nom }} {{ client.prenom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group input-group-merge">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input name="sujet" class="form-control" placeholder="Sujet" required type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select name="num" class="form-control" data-toggle="select">
+                        <option>Numéro de la publicité</option>
+                        <option>123</option>
+                            {% for publicite in publicites %}
+                                <option>n°{{ publicite.num }}</option>
+                            {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{ form.media }}
+                    {{ form }}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+{% endblock form %}

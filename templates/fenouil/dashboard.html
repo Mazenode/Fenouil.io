@@ -91,9 +91,9 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                <li class="nav-item">
-                  <a class="nav-link" href="" target="_blank">
+                  <a class="nav-link" href="creer_client/">
                   <i class="ni ni-spaceship"></i>
-                  <span class="nav-link-text">Cr&eacute;er un nouveau client - Mis a jour client</span>
+                  <span class="nav-link-text">Cr&eacute;er un nouveau client</span>
                   </a>
                </li>
                <li class="nav-item">
@@ -109,11 +109,21 @@
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="../../envoyer_publicite" target="_blank">
-                  <i class="ni ni-send"></i>
-                  <span class="nav-link-text">Envoyer une publicité</span>
-                  </a>
-               </li>
+                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
+                    <div class="collapse show" id="navbar-multilevel" style="">
+                      <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                          <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="envoi_SMS" class="nav-link ">Envoi par SMS</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="envoi_papier" class="nav-link ">Envoi par papier</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
                <li class="nav-item">
                   <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
                   <i class="ni ni-check-bold"></i>

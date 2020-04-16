@@ -1,0 +1,64 @@
+
+@media only screen and (max-width: 600px) {
+	  h1, h4, p, .hero__btn, .logo, h2, a {
+	    	text-align: center;
+	  }
+	  .generating-icon {
+	  	display: none;
+	  }
+	  .sous-titre {
+	  	font-size: 0.8em;
+	  	margin-left: 1.4em;
+	  }
+	  h4, p {
+	  	margin-left: -1.4em;
+	  }
+	  .login {
+	  	margin-top: 3.5em;
+	  	margin-right:29vw;
+	  	font-size: 0.9em;
+	  }
+	  svg {
+	  	display: block;
+
+	  }
+	  main {
+	  	margin-top: 10em;
+	  }
+}
+
+.scroll-downs {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  
+  width :2.125em;
+  height: 3.4375em;
+}
+.mousey {
+  width: 0.1875em;
+  padding: 0.625em 0.9375em;
+  height: 2.1875em;
+  border: 0.125em solid #6760da;
+  border-radius: 1.5625em;
+  opacity: 0.75;
+  box-sizing: content-box;
+}
+.scroller {
+  width: 0.3125em;
+  height: 0.625em;
+  border-radius: 25%;
+  background-color: #ffd037;
+  animation-name: scroll;
+  animation-duration: 2.2s;
+  animation-timing-function: cubic-bezier(.15,.41,.69,.94);
+  animation-iteration-count: infinite;
+}
+@keyframes scroll {
+  0% { opacity: 0; }
+  10% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(15px); opacity: 0;}
+}

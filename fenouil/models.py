@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+from ckeditor.fields import RichTextField
 
 class Item(models.Model):
     titre = models.CharField(max_length=100)
@@ -25,3 +25,10 @@ class Client(models.Model):
 
     def __str__(self):
         return self.prenom + " " + self.nom
+
+class Envoi(models.Model):
+    date = models.CharField(max_length=8)
+    num = models.CharField(max_length=100)
+
+class Mail(models.Model):
+    contenu = RichTextField(verbose_name="")

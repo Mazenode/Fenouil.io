@@ -9,8 +9,12 @@ urlpatterns = [
     path('articles/', views.articles, name="articles"),
     path('client/', views.client, name="client"),
     path('login/', views.login, name='login'),
-    path('envoyer_publicite/', views.envoyer_publicite, name='envoyer_publicite'),
+    path('envoi_mail/', views.envoi_mail, name='envoi_mail'),
+    path('envoi_SMS/', views.envoi_SMS, name='envoi_SMS'),
+    path('envoi_papier/', views.envoi_papier, name='envoi_papier'),
+    path('creer_client/', views.creer_client, name='creer_client'),
     path('accounts/', include('account.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:

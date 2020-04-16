@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'fenouil',
+    'ckeditor',
+    'ckeditor_uploader',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -154,4 +156,13 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         }
     }
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default':{
+        'width' : 'auto',
+    }
+   
 }
