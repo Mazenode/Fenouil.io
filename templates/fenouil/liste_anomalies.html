@@ -11,7 +11,7 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  -->
-{% load static %}
+ {% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Fenouil.io - Liste clients</title>
+  <title>Argon Dashboard PRO - Premium Bootstrap 4 Admin Template</title>
   <!-- Favicon -->
   <link rel="icon" href="{% static 'assets/img/brand/favicon.png'%}" type="image/png">
   <!-- Fonts -->
@@ -29,14 +29,14 @@
   <link rel="stylesheet" href="{% static 'assets/vendor/nucleo/css/nucleo.css'%}" type="text/css">
   <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css'%}" type="text/css">
   <!-- Page plugins -->
-  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css'%}">
-  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}">
-  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/animate.css/animate.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/sweetalert2/dist/sweetalert2.min.css'%}">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="{% static 'assets/css/argon.css'%}" type="text/css">
 </head>
 
 <body>
+  <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
    <div class="scrollbar-inner">
       <!-- Brand -->
@@ -90,9 +90,9 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                <li class="nav-item">
-                  <a class="nav-link" href="" target="_blank">
+                  <a class="nav-link" href="creer_client/">
                   <i class="ni ni-spaceship"></i>
-                  <span class="nav-link-text">Cr&eacute;er un nouveau client - Mis a jour client</span>
+                  <span class="nav-link-text">Cr&eacute;er un nouveau client</span>
                   </a>
                </li>
                <li class="nav-item">
@@ -108,11 +108,21 @@
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="../envoyer_publicite" target="_blank">
-                  <i class="ni ni-send"></i>
-                  <span class="nav-link-text">Envoyer une publicité</span>
-                  </a>
-               </li>
+                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
+                    <div class="collapse show" id="navbar-multilevel" style="">
+                      <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                          <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="envoi_SMS" class="nav-link ">Envoi par SMS</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="envoi_papier" class="nav-link ">Envoi par papier</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
                <li class="nav-item">
                   <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
                   <i class="ni ni-check-bold"></i>
@@ -126,7 +136,11 @@
 </nav>
   <!-- Main content -->
   <div class="main-content" id="panel">
-   <!-- Topnav -->
+    <!-- Topnav -->
+    </nav>
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -161,6 +175,7 @@
                 <i class="ni ni-zoom-split-in"></i>
               </a>
             </li>
+
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
@@ -194,23 +209,22 @@
       </div>
     </nav>
     <!-- Header -->
-    <!-- Header -->
     <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Client</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Gestion d'anomalies</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Liste</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Clients</li>
+                  <li class="breadcrumb-item"><a href="#">Outils</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Gestion d'anomalies</li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">Nouveau</a>
+              <a href="#" class="btn btn-sm btn-neutral">Nouveau mail</a>
             </div>
           </div>
         </div>
@@ -218,104 +232,58 @@
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <!-- Table -->
-      <div class="row">
-        <div class="col">
-            <div class="card">
-            <!-- Card header -->
+      <div class="row justify-content-center">
+        <div class="col-lg-8 card-wrapper">
+          <!-- Alerts -->
+          <div class="card">
             <div class="card-header">
-              <h3 class="mb-0">Liste de clients</h3>
-              <p class="text-sm mb-0">
-                La liste de tous les clients ayant passé commande chez DÉCO-PERSO. Cliquez sur un client pour éditer son profil ou obtenir des informations supplémentaires.
-              </p>
+              <h3 class="mb-0">Liste des anomalies</h3>
             </div>
-            <div class="table-responsive py-4">
-              <table class="table table-flush" id="datatable-basic">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Nom et prénom</th>
-                    <th>Mail</th>
-                    <th>Ville</th>
-                    <th>Pays</th>
-                    <th>Nombre de commandes</th>
-                    <th>Somme totale dépensée</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>Nom et prénom</th>
-                    <th>Mail</th>
-                    <th>Ville</th>
-                    <th>Pays</th>
-                    <th>Nombre de commandes</th>
-                    <th>Somme totale dépensée</th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                {% for client in clients %}
-                     <tr>
-                        <td>{{ client.nom }} {{ client.prenom }}</td>
-                        <td>{{ client.mail }}</td>
-                        <td>{{ client.ville }}</td>
-                        <td>{{ client.pays }}</td>
-                        <td>{{ client.nombre_de_commandes }}</td>
-                        <td>{{ client.somme_totale_depensee }} €</td>
-                     </tr>
-                {% endfor %}
-                </tbody>
-              </table>
+            <div class="card-body">
+              {% for anomalie in anomalies %}
+                {% if anomalie.statut == 'Urgent' %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="alert-text"><strong>{{ anomalie.statut }} !</strong> <strong> n°{{ anomalie.num_commande }}</strong> {{ anomalie.description }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% elif anomalie.statut == 'A traiter rapidement' %}
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <span class="alert-text"><strong>{{ anomalie.statut }} !</strong> <strong> n°{{ anomalie.num_commande }}</strong> {{ anomalie.description }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% else %}
+                  <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <span class="alert-text"><strong>{{ anomalie.statut }} !</strong> <strong> n°{{ anomalie.num_commande }}</strong> {{ anomalie.description }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endif %}
+              {% endfor %}
             </div>
           </div>
-
         </div>
       </div>
-          <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6">
-            <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2020 <a href="" class="font-weight-bold ml-1" target="_blank">Webee</a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Webee</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
-   <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
-   <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'%}"></script>
-   <script src="{% static 'assets/vendor/js-cookie/js.cookie.js'%}"></script>
-   <script src="{% static 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js'%}"></script>
-   <script src="{% static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js'%}"></script>
-   <!-- Optional JS -->
-    <script src="{% static 'assets/vendor/datatables.net/js/jquery.dataTables.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.html5.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.flash.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/datatables.net-select/js/dataTables.select.min.js'%}"></script>
-   <script type="text/javascript">
-    $(document).ready(function(){
-        $('#datatable-basic').DataTable();
-    });
-    </script>
-
+  <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="{% static 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
+  <!-- Optional JS -->
+  <script src="{% static 'assets/vendor/sweetalert2/dist/sweetalert2.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
   <!-- Argon JS -->
-  <script src="{% static 'assets/js/argon.js' %}"></script>
-
-
+  <script src="{% static 'assets/js/argon.js?v=1.1.0' %}"></script>
+  <!-- Demo JS - remove this in your project -->
+  <script src="{% static 'assets/js/demo.min.js' %}"></script>
 </body>
 
 </html>

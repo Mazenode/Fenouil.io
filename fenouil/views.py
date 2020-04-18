@@ -2,7 +2,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from fenouil.models import Item, Client, Envoi
+from django.utils import timezone
+from fenouil.models import Item, Client, Envoi, Anomalie
 from fenouil.forms import MailForm
 import boto3
 import smtplib
@@ -10,6 +11,7 @@ from email.message import EmailMessage
 
 clients = Client.objects.all()
 items = Item.objects.all()
+anomalies = Anomalie.objects.all()
 
 def accueil(request):
     if not request.user.is_authenticated:
@@ -203,3 +205,29 @@ def creer_client(request):
 
         else :
             return render(request, 'fenouil/creer_client.html')
+
+def liste_anomalies(request):
+    if not request.user.is_authenticated:
+        return render(request, 'fenouil/accueil.html')
+    else:
+        return render(request, 'fenouil/liste_anomalies.html', {'anomalies': anomalies})
+
+def signaler_anomalie(request):
+    if not request.user.is_authenticated:
+        return render(request, 'fenouil/accueil.html')
+    else:
+        if request.method == 'POST':
+
+            anomalie = Anomalie(
+                num_commande = request.POST.get('num'), 
+                statut = request.POST.get('statut'), 
+                description = request.POST.get('texte'),
+                pub_date = timezone.now()
+                )
+
+            anomalie.save()
+
+            return render(request, 'fenouil/signaler_anomalie.html')
+
+        else :
+            return render(request, 'fenouil/signaler_anomalie.html')

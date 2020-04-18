@@ -32,3 +32,9 @@ class Envoi(models.Model):
 
 class Mail(models.Model):
     contenu = RichTextField(verbose_name="")
+
+class Anomalie(models.Model):
+    num_commande = models.CharField(max_length=50)
+    statut = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('Date de publication', default=None)
