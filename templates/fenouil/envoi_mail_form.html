@@ -30,8 +30,8 @@
                 <div class="form-group">
                     <select class="form-control" data-toggle="select" name="mail2">
                     <option>Ou choisir le mail d'un de vos clients</option>
-                         {% for client in clients %}
-                             <option>{{ client.nom }} {{ client.prenom }}</option>
+                         {% for individu in individus %}
+                             <option>{{ individu.nom }} {{ individu.prenom }}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -10,7 +10,7 @@ class Item(models.Model):
     def __str__(self):
         return self.titre
 
-class Client(models.Model):
+class Individu(models.Model):
     prenom = models.CharField(max_length=50)
     nom = models.CharField(max_length=50)
     mail = models.EmailField(max_length=80)
@@ -22,6 +22,9 @@ class Client(models.Model):
     nombre_de_commandes = models.IntegerField(default=0)
     somme_totale_depensee = models.FloatField(default=0)
     commentaires = models.CharField(max_length=300, default=None,blank=True, null=True)
+    categorie_soc = models.CharField(max_length=50)
+    caracteristique_comm = models.CharField(max_length=50)
+    date = models.CharField(max_length=50, default=None)
 
     def __str__(self):
         return self.prenom + " " + self.nom
@@ -38,3 +41,20 @@ class Anomalie(models.Model):
     statut = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     pub_date = models.DateTimeField('Date de publication', default=None)
+
+
+class CibleRoutage(models.Model):
+    categorie_socio_professionelle = models.CharField(max_length=50)
+    age_minimum = models.IntegerField()
+    age_maximum = models.IntegerField()       
+    departement = models.CharField(max_length=50)
+    individus_selectionnes = models.CharField(max_length=100)
+    type_canal = models.CharField(max_length=10)
+    type_papier = models.CharField(max_length=15, default=None,blank=True, null=True)
+    titre = models.CharField(max_length=50)           
+    description = models.CharField(max_length=300)
+    articles_selec = models.CharField(max_length=300)
+    statut = models.BooleanField(default = False)
+
+    def __str__(self):
+        return self.titre + " - " + self.type_canal

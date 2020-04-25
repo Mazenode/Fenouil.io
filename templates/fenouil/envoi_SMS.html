@@ -239,8 +239,8 @@
                                         <select class="form-control" name="num_tel2" data-toggle="select">
                                             <option>Ou choisir le numéro de téléphone d'un de vos clients</option>
                                             <option>33624496880</option>
-                                            {% for client in clients %}
-                                                <option>{{ client.nom }} {{ client.prenom }}</option>
+                                            {% for individu in individus %}
+                                                <option>{{ individu.nom }} {{ individu.prenom }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

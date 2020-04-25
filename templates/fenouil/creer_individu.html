@@ -210,7 +210,7 @@
                             <!-- Card header -->
                             <form method="post">
                             <div class="card-header">
-                                <h3 class="mb-0">Créer un client</h3>
+                                <h3 class="mb-0">Créer un individu</h3>
                                 <button style="position: absolute; justify-content: center; right: 2vw;" class="btn btn-primary" type="submit">Envoyer</button>
                             </div>
                             <!-- Card body -->
@@ -248,6 +248,41 @@
                                         </div>
                                       </div>
                                     </div>
+                                    <div class="row">
+                                      <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="example3cols1Input">Catégorie socio-professionelle :</label>
+                                                <select name="csp" class="form-control" data-toggle="select">
+                                                    <option>Agriculteurs exploitants</option>
+                                                    <option>Artisans, commerçants et chefs d’entreprise</option>
+                                                    <option>Cadres et professions intellectuelles supérieures</option>
+                                                    <option>Professions Intermédiaires</option>
+                                                    <option>Employés</option>
+                                                    <option>Ouvriers</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                              <label class="form-control-label" for="example3cols1Input">Date de naissance :</label>
+                                              <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input class="form-control" name="date_naissance" placeholder="jj/mm/aa" type="date">
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                              <label class="form-control-label" for="example3cols1Input">Caractéristique commerciale :</label>
+                                                <select name="car_com" class="form-control" data-toggle="select">
+                                                    <option>prospect</option>
+                                                    <option>client</option>
+                                                    <option>client interdit</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                   </div>
                                   <hr class="my-4" />
                                   <!-- Address -->

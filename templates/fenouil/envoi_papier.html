@@ -237,8 +237,8 @@
                                         <select class="form-control" name="adresse2" data-toggle="select">
                                             <option>Ou choisir une adresse d'un de vos clients</option>
                                             <option>Test</option>
-                                            {% for client in clients %}
-                                            <option>{{ client.adresse }}</option>
+                                            {% for individu in individus %}
+                                            <option>{{ individu.adresse }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

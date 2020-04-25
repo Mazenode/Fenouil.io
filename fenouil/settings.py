@@ -25,7 +25,7 @@ SECRET_KEY = '=!e_ig(pa92(*es@hgp1au)se1(p%l!v%flo)xgkm9trc-pev8'
 DEBUG = True
 
 #'192.168.1.28'
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','192.168.1.28']
 
 #Ajoute le css, les images etc
 STATICFILES_DIRS = (

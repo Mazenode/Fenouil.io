@@ -3,21 +3,43 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.utils import timezone
-from fenouil.models import Item, Client, Envoi, Anomalie
+from django.http import HttpResponseRedirect
+from fenouil.models import Item, Individu, Envoi, Anomalie, CibleRoutage
 from fenouil.forms import MailForm
 import boto3
 import smtplib
 from email.message import EmailMessage
 
-clients = Client.objects.all()
+from django.core import serializers
+
+individus = Individu.objects.all()
 items = Item.objects.all()
 anomalies = Anomalie.objects.all()
+cibles = CibleRoutage.objects.all()
 
 def accueil(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
-        return render(request, 'fenouil/dashboard.html')
+
+        nombre_anomalies_anciennes = 0
+        nombre_anomalies_recentes = 0
+
+        for anomalie in anomalies:
+            if (anomalie.pub_date.month != timezone.now().month):
+                nombre_anomalies_anciennes += 1
+
+            else:
+                nombre_anomalies_recentes += 1
+        
+        pourcentage_anomalies = ((nombre_anomalies_recentes - nombre_anomalies_anciennes)/ nombre_anomalies_anciennes) * 100
+
+        if (nombre_anomalies_anciennes != 0):
+            return render(request, 'fenouil/dashboard.html',
+                { 'nombre_anomalies': nombre_anomalies_recentes, 'ratio_anomalies': round(pourcentage_anomalies, 2) }
+                )
+        else:
+            return render(request, '404.html')
 
 def articles(request):
     if not request.user.is_authenticated:
@@ -25,11 +47,11 @@ def articles(request):
     else:
         return render(request, 'fenouil/articles.html', {'items': items})
 
-def client(request):
+def individu(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
-        return render(request, 'fenouil/client.html', {'clients': clients})
+        return render(request, 'fenouil/individu.html', {'individus': individus})
 
 def envoi_mail(request):
     if not request.user.is_authenticated:
@@ -127,8 +149,8 @@ def envoi_SMS(request):
             #envoi.save()
             
             #Permet l'envoi de messages
-            client = boto3.client('sns', 'eu-west-1')
-            client.publish(PhoneNumber = num_tel, Message = texte)
+            individu = boto3.client('sns', 'eu-west-1')
+            individu.publish(PhoneNumber = num_tel, Message = texte)
             
             return render(request, 'fenouil/envoi_SMS.html')
 
@@ -179,13 +201,13 @@ def envoi_papier(request):
         else :
             return render(request, 'fenouil/envoi_papier.html')
 
-def creer_client(request):
+def creer_individu(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
         if request.method == 'POST':
 
-            client = Client(
+            individu = Individu(
                 prenom = request.POST.get('prenom'), 
                 nom = request.POST.get('nom'), 
                 adresse = request.POST.get('adresse'),
@@ -197,14 +219,17 @@ def creer_client(request):
                 nombre_de_commandes = request.POST.get('nombre_commandes'),
                 somme_totale_depensee = request.POST.get('somme_totale'),
                 commentaires = request.POST.get('commentaires'),
+                categorie_soc = request.POST.get('csp'),
+                caracteristique_comm = request.POST.get('car_com'),
+                date = request.POST.get('date_naissance'),
                 )
 
-            client.save()
+            individu.save()
 
-            return render(request, 'fenouil/creer_client.html')
+            return render(request, 'fenouil/creer_individu.html')
 
         else :
-            return render(request, 'fenouil/creer_client.html')
+            return render(request, 'fenouil/creer_individu.html')
 
 def liste_anomalies(request):
     if not request.user.is_authenticated:
@@ -231,3 +256,79 @@ def signaler_anomalie(request):
 
         else :
             return render(request, 'fenouil/signaler_anomalie.html')
+
+def creer_cible_routage(request, etape):
+
+    global csp, age_min, age_max, departement, individus_selec
+
+    if not request.user.is_authenticated:
+        return render(request, 'fenouil/accueil.html')
+    else:
+        
+        if (etape == 1):
+            if request.method == 'POST':
+                
+                csp = request.POST.get('csp'),
+                age_min = request.POST.get('age_min')
+                age_max = request.POST.get('age_max')           
+                departement = request.POST.get('departement')
+                individus_selec = request.POST.getlist('individus_selec')
+
+                return HttpResponseRedirect('../../creer_cible_routage/2/')
+
+            else :
+                return render(request, 'fenouil/creer_cible_routage_1.html', {'individus': individus})
+        elif (etape == 2):
+            if request.method == 'POST':
+
+                type_canal = request.POST.get('type')
+                type_papier = request.POST.get('type_papier')
+                titre = request.POST.get('titre')        
+                description = request.POST.get('description')
+                articles_selec = request.POST.getlist('articles_selec')
+
+                cible = CibleRoutage(
+                    categorie_socio_professionelle = csp,
+                    age_minimum = age_min,
+                    age_maximum = age_max,      
+                    departement = departement,
+                    individus_selectionnes = str(individus_selec),
+                    type_canal = type_canal,
+                    type_papier = type_papier,
+                    titre = titre,         
+                    description = description,
+                    articles_selec = str(articles_selec)
+                    )
+
+                cible.save()
+
+                #On serialize la derniere cible de routage (celle que l'on vient de créer) en xml
+                #queryset = serializers.serialize('xml', CibleRoutage.objects.filter(pk=CibleRoutage.objects.count()-1))
+                
+                #return HttpResponse(queryset, content_type="application/xml")
+
+                return render(request, 'fenouil/creer_cible_routage_1.html', {'individus': individus})
+
+            else :
+                return render(request, 'fenouil/creer_cible_routage_2.html', {'items': items})
+        else:
+            return render(request, '404.html')
+
+def valider_cible_routage(request):
+    if not request.user.is_authenticated:
+        return render(request, 'fenouil/accueil.html')
+    else:
+        if request.method == 'POST':
+
+            cible = CibleRoutage.objects.get(pk=request.POST.get('pk'))
+
+            print('Avant = ',cible.statut)
+            cible.statut = True
+            cible.save()
+
+            print('Après = ', cible.statut)
+
+            return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles})
+
+        else:
+            return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles})

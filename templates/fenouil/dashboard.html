@@ -52,13 +52,13 @@
             <!-- Nav items -->
             <ul class="navbar-nav">
                <li class="nav-item">
-                  <a class="nav-link" href="../">
+                  <a class="nav-link active" href="../">
                   <i class="ni ni-tv-2 text-primary"></i>
                   <span class="nav-link-text">Tableau de bord</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link active" href="../articles">
+                  <a class="nav-link" href="../articles">
                   <i class="ni ni-book-bookmark text-orange"></i>
                   <span class="nav-link-text">Articles</span>
                   </a>
@@ -70,9 +70,9 @@
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="../client">
+                  <a class="nav-link" href="../individu">
                   <i class="ni ni-single-02 text-yellow"></i>
-                  <span class="nav-link-text">Client</span>
+                  <span class="nav-link-text">Individus</span>
                   </a>
                </li>
                <li class="nav-item">
@@ -91,15 +91,15 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                <li class="nav-item">
-                  <a class="nav-link" href="creer_client/">
+                  <a class="nav-link" href="creer_individu/">
                   <i class="ni ni-spaceship"></i>
-                  <span class="nav-link-text">Cr&eacute;er un nouveau client</span>
+                  <span class="nav-link-text">Cr&eacute;er un nouvel individu</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="">
+                  <a class="nav-link" href="creer_cible_routage/1/">
                   <i class="ni ni-palette"></i>
-                  <span class="nav-link-text">Cr&eacute;er une publicit&eacute;</span>
+                  <span class="nav-link-text">Cr&eacute;er une cible de routage</span>
                   </a>
                </li>
                <li class="nav-item">
@@ -109,8 +109,8 @@
                   </a>
                </li>
                <li class="nav-item">
-                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
-                    <div class="collapse show" id="navbar-multilevel" style="">
+                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
+                    <div class="collapse in" id="navbar-multilevel" style="">
                       <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                           <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
@@ -125,15 +125,21 @@
                     </div>
                   </li>
                <li class="nav-item">
-                  <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
+                  <a class="nav-link" href="valider_cible_routage">
                   <i class="ni ni-check-bold"></i>
                   <span class="nav-link-text">Valider une cible de routage</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
+                  <a class="nav-link" href="signaler_anomalie">
                   <i class="ni ni-notification-70"></i>
                   <span class="nav-link-text">Signaler une anomalie</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="envoi_mail">
+                  <i class="ni ni-email-83"></i>
+                  <span class="nav-link-text">Envoyer un mail</span>
                   </a>
                </li>
             </ul>
@@ -197,8 +203,8 @@
                   <h6 class="text-overflow m-0">Bienvenue !</h6>
                 </div>
                 <a href="profil" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>Mon profil</span>
+                  <i class="ni ni-support-16"></i>
+                  <span>Demander de l'aide</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="accounts/logout" class="dropdown-item">
@@ -228,7 +234,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Anomalies non trait&eacute;es</h5>
-                      <span class="h2 font-weight-bold mb-0">27</span>
+                      <span class="h2 font-weight-bold mb-0">{{ nombre_anomalies }}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -237,7 +243,11 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3,48%</span>
+                    {% if ratio_anomalies > 0 %}
+                      <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ ratio_anomalies }}%</span>
+                    {% else %}
+                      <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i> -{{ ratio_anomalies }}%</span>
+                    {% endif %}
                     <span class="text-nowrap">Depuis le mois dernier</span>
                   </p>
                 </div>

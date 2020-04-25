@@ -200,12 +200,12 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Client</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Individu</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Liste</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Clients</li>
+                  <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Individu</li>
                 </ol>
               </nav>
             </div>
@@ -224,9 +224,9 @@
             <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">Liste de clients</h3>
+              <h3 class="mb-0">Liste d'individus</h3>
               <p class="text-sm mb-0">
-                La liste de tous les clients ayant passé commande chez DÉCO-PERSO. Cliquez sur un client pour éditer son profil ou obtenir des informations supplémentaires.
+                La liste de tous les individus enregistrés dans la base de donnée DÉCO-PERSO, qu'ils soient client ou non. 
               </p>
             </div>
             <div class="table-responsive py-4">
@@ -252,14 +252,14 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                {% for client in clients %}
+                {% for individu in individus %}
                      <tr>
-                        <td>{{ client.nom }} {{ client.prenom }}</td>
-                        <td>{{ client.mail }}</td>
-                        <td>{{ client.ville }}</td>
-                        <td>{{ client.pays }}</td>
-                        <td>{{ client.nombre_de_commandes }}</td>
-                        <td>{{ client.somme_totale_depensee }} €</td>
+                        <td>{{ individu.nom }} {{ individu.prenom }}</td>
+                        <td>{{ individu.mail }}</td>
+                        <td>{{ individu.ville }}</td>
+                        <td>{{ individu.pays }}</td>
+                        <td>{{ individu.nombre_de_commandes }}</td>
+                        <td>{{ individu.somme_totale_depensee }} €</td>
                      </tr>
                 {% endfor %}
                 </tbody>
@@ -269,25 +269,6 @@
 
         </div>
       </div>
-          <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6">
-            <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2020 <a href="" class="font-weight-bold ml-1" target="_blank">Webee</a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Webee</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
   <!-- Argon Scripts -->

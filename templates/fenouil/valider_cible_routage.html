@@ -1,0 +1,403 @@
+<!--
+=========================================================
+* Argon Dashboard - v1.2.0
+=========================================================
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+
+
+* Copyright  Creative Tim (http://www.creative-tim.com)
+* Coded by www.creative-tim.com
+
+
+
+=========================================================
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+{%  load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title>Accueil</title>
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'assets/img/brand/favicon.png'%}" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="{% static 'assets/vendor/nucleo/css/nucleo.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css'%}">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/argon.css'%}" type="text/css">
+
+</head>
+
+<body>
+ <!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+   <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header  align-items-center">
+         <a class="navbar-brand" href="https://www.figma.com/proto/Uxr7zMsCJDvOhhUIqDcbi2/Fenouil.io?node-id=6%3A0&scaling=min-zoom">
+         <img src="{% static 'assets/img/brand/blue.png' %}" class="navbar-brand-img" alt="...">
+         </a>
+      </div>
+      <div class="navbar-inner">
+         <!-- Collapse -->
+         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+            <!-- Nav items -->
+            <ul class="navbar-nav">
+               <li class="nav-item">
+                  <a class="nav-link active" href="../">
+                  <i class="ni ni-tv-2 text-primary"></i>
+                  <span class="nav-link-text">Tableau de bord</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="../articles">
+                  <i class="ni ni-book-bookmark text-orange"></i>
+                  <span class="nav-link-text">Articles</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="">
+                  <i class="ni ni-cart text-default"></i>
+                  <span class="nav-link-text">Commandes</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="../individu">
+                  <i class="ni ni-single-02 text-yellow"></i>
+                  <span class="nav-link-text">Individus</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="logout">
+                  <i class="ni ni-key-25 text-info"></i>
+                  <span class="nav-link-text">Logout</span>
+                  </a>
+               </li>
+            </ul>
+            <!-- Divider -->
+            <hr class="my-3">
+            <!-- Heading -->
+            <h6 class="navbar-heading p-0 text-muted">
+               <span class="docs-normal">Outils</span>
+            </h6>
+            <!-- Navigation -->
+            <ul class="navbar-nav mb-md-3">
+               <li class="nav-item">
+                  <a class="nav-link" href="creer_individu/">
+                  <i class="ni ni-spaceship"></i>
+                  <span class="nav-link-text">Cr&eacute;er un nouvel individu</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="creer_cible_routage/1/">
+                  <i class="ni ni-palette"></i>
+                  <span class="nav-link-text">Cr&eacute;er une cible de routage</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="liste_anomalies">
+                  <i class="ni ni-ui-04"></i>
+                  <span class="nav-link-text">Gestions anomalies</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
+                    <div class="collapse in" id="navbar-multilevel" style="">
+                      <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                          <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="envoi_SMS" class="nav-link ">Envoi par SMS</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="envoi_papier" class="nav-link ">Envoi par papier</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="valider_cible_routage">
+                  <i class="ni ni-check-bold"></i>
+                  <span class="nav-link-text">Valider une cible de routage</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="signaler_anomalie">
+                  <i class="ni ni-notification-70"></i>
+                  <span class="nav-link-text">Signaler une anomalie</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="envoi_mail">
+                  <i class="ni ni-email-83"></i>
+                  <span class="nav-link-text">Envoyer un mail</span>
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</nav>
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Search form -->
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+            <div class="form-group mb-0">
+              <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input class="form-control" placeholder="Search" type="text">
+              </div>
+            </div>
+            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </form>
+          <!-- Navbar links -->
+          <ul class="navbar-nav align-items-center  ml-md-auto ">
+            <li class="nav-item d-xl-none">
+              <!-- Sidenav toggler -->
+              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item d-sm-none">
+              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+                <i class="ni ni-zoom-split-in"></i>
+              </a>
+            </li>
+
+          </ul>
+          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle">
+                    <img alt="Image placeholder" src="{% static 'assets/img/theme/team-4.jpg' %}">
+                  </span>
+                  <div class="media-body  ml-2  d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold">Quentin Chaignaud</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu  dropdown-menu-right ">
+                <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow m-0">Bienvenue !</h6>
+                </div>
+                <a href="profil" class="dropdown-item">
+                  <i class="ni ni-support-16"></i>
+                  <span>Demander de l'aide</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="accounts/logout" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <!-- Main content -->
+  <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Valider une cible de routage</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item">Outils</li>
+                  <li class="breadcrumb-item active" aria-current="page">Valider une cible de routage</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header bg-transparent">
+              <h3 class="mb-0">Liste des cibles de routage</h3>
+            </div>
+            <div class="card-body">
+                <style type="text/css">
+              .timeline-one-side:before {
+                  left: 1rem;
+              }
+              [data-timeline-axis-style='dashed']:before {
+                  border-right-style: dashed !important;
+              }
+              .timeline:before {
+                  position: absolute;
+                  top: 0;
+                  left: 1rem;
+                  height: 100%;
+                  content: '';
+                  border-right: 2px solid #e9ecef;
+              }
+              *, *::before, *::after {
+                  box-sizing: border-box;
+              }
+              .timeline-one-side .timeline-step {
+                  left: 1rem;
+              }
+              .timeline-step {
+                  font-size: 1rem;
+                  font-weight: 600;
+                  position: absolute;
+                  z-index: 1;
+                  left: 0;
+                  display: inline-flex;
+                  width: 33px;
+                  height: 33px;
+                  transform: translateX(-50%);
+                  text-align: center;
+                  border-radius: 50%;
+                  align-items: center;
+                  justify-content: center;
+              }
+              .timeline-one-side .timeline-content {
+                  width: auto;
+              }
+              .timeline-content {
+                  position: relative;
+                  position: relative;
+                  top: -6px;
+                  margin-left: 60px;
+                  padding-top: .5rem;
+              }
+              .timeline-block:first-child {
+                  margin-top: 0;
+              }
+              .timeline-block {
+                  position: relative;
+                  margin: 2em 0;
+              }
+
+
+               </style>
+
+              <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+                {% for cible in cibles %}
+                {% if cible.type_canal == 'SMS' %}
+                  <div class="timeline-block">
+                  <span class="timeline-step badge-success">
+                    <i class="ni ni-mobile-button"></i>
+                  </span>
+                  <div class="timeline-content">
+                    <small class="text-muted font-weight-bold">SMS</small>
+                    <h5 class=" mt-3 mb-0">{{ cible.titre }}</h5>
+                    <p class=" text-sm mt-1 mb-0">{{ cible.description }}</p>
+                    <div class="mt-3">
+                      <span class="badge badge-pill badge-info"><a href="#" style="color: #23acd2">Voir le fichier XML</a></span>
+                    </div>
+                    <div class="mt-3">
+                    <form method="post">
+                        {% csrf_token %}  
+                        <input type="text" name="pk" value="{{ cible.pk }}" style="display: none">
+                      <button class="badge badge-pill badge-success" value="test" type="submit" style="border: none">Valider la publicité</button>
+                    </form>
+                    </div>
+                    
+                  </div>
+                </div>
+                {% elif cible.type_canal == 'Format papier' %}
+                  <div class="timeline-block">
+                  <span class="timeline-step badge-info">
+                    <i class="ni ni-ruler-pencil"></i>
+                  </span>
+                  <div class="timeline-content">
+                    <small class="text-muted font-weight-bold">Format papier</small>
+                    <h5 class=" mt-3 mb-0">{{ cible.titre }}</h5>
+                    <p class=" text-sm mt-1 mb-0">{{ cible.description }}</p>
+                    <div class="mt-3">
+
+                      <span class="badge badge-pill badge-info"><a href="#" style="color: #23acd2">Voir le fichier XML</a></span>
+                    </div>
+                    <div class="mt-3">
+                    <form method="post">
+                        {% csrf_token %}  
+                        <input type="text" name="pk" value="{{ cible.pk }}" style="display: none">
+                      <button class="badge badge-pill badge-success" value="test" type="submit" style="border: none">Valider la publicité</button>
+                    </form>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                {% else %}
+                  <div class="timeline-block">
+                  <span class="timeline-step badge-danger">
+                    <i class="ni ni-email-83"></i>
+                  </span>
+                  <div class="timeline-content">
+                    <small class="text-muted font-weight-bold">Mail</small>
+                    <h5 class=" mt-3 mb-0">{{ cible.titre }}</h5>
+                    <p class=" text-sm mt-1 mb-0">{{ cible.description }}</p>
+                    <div class="mt-3">
+                      <span class="badge badge-pill badge-info"><a href="#" style="color: #23acd2">Voir le fichier XML</a></span>
+                    </div>
+                    <div class="mt-3">
+                    <form method="post">
+                        {% csrf_token %}  
+                        <input type="text" name="pk" value="{{ cible.pk }}" style="display: none">
+                      <button class="badge badge-pill badge-success" value="test" type="submit" style="border: none">Valider la publicité</button>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/js-cookie/js.cookie.js'%}"></script>
+  <script src="{% static 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js'%}"></script>
+  <!-- Optional JS -->
+  <script src="{% static 'assets/vendor/chart.js/dist/Chart.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/chart.js/dist/Chart.extension.js'%}"></script>
+  <!-- Argon JS -->
+  <script src="{% static 'assets/js/argon.js'%}"></script>
+
+  <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Argon JS -->
+  <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  <!-- Demo JS - remove this in your project -->
+  <script src="../../assets/js/demo.min.js"></script>
+</body>
+
+</html>
