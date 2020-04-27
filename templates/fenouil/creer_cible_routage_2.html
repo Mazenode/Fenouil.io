@@ -52,13 +52,13 @@
             <!-- Nav items -->
             <ul class="navbar-nav">
                <li class="nav-item">
-                  <a class="nav-link active" href="../">
+                  <a class="nav-link active" href="../../">
                   <i class="ni ni-tv-2 text-primary"></i>
                   <span class="nav-link-text">Tableau de bord</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="../articles">
+                  <a class="nav-link" href="../../articles">
                   <i class="ni ni-book-bookmark text-orange"></i>
                   <span class="nav-link-text">Articles</span>
                   </a>
@@ -70,13 +70,13 @@
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="../individu">
+                  <a class="nav-link" href="../../individu">
                   <i class="ni ni-single-02 text-yellow"></i>
                   <span class="nav-link-text">Individus</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="logout">
+                  <a class="nav-link" href="../../logout">
                   <i class="ni ni-key-25 text-info"></i>
                   <span class="nav-link-text">Logout</span>
                   </a>
@@ -346,6 +346,16 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script>
+    function changeFunc(){
+      if(document.getElementById('type').value == "Format papier") {
+       document.getElementById("exampleFormControlSelect2").removeAttribute("disabled");  
+      }
+      else {
+        document.getElementById("exampleFormControlSelect2").setAttribute("disabled", true); 
+      }
+    }
+</script>
 </body>
 
 </html>

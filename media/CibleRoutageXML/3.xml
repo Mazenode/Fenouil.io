@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<CibleRoutage>
+   <support>Mail</support>
+   <liste_individus>
+      <individu>
+         <mail>elon.musk@spacex.com</mail>
+         <numero>33624496880</numero>
+         <ville>Hawthorne</ville>
+      </individu>
+      <individu>
+         <mail>manu@gmail.com</mail>
+         <numero>33651547178</numero>
+         <ville>Brunoy</ville>
+      </individu>
+   </liste_individus>
+   <Nom>qsdqsd</Nom>
+   <description>&lt;wxcxwc&lt;xwc&lt;xwc</description>
+   <liste_articles>
+      <articles>
+         <nom>Marteau rivoir fibre de verre STANLEY, 0.5 kg</nom>
+         <prix>2.0</prix>
+      </articles>
+      <articles>
+         <nom>Perceuse à percussion filaire BOSCH PROFESSIONAL Gsb 24-2, 1100 W</nom>
+         <prix>32.0</prix>
+      </articles>
+   </liste_articles>
+</CibleRoutage>

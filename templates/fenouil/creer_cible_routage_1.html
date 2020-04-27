@@ -52,13 +52,13 @@
             <!-- Nav items -->
             <ul class="navbar-nav">
                <li class="nav-item">
-                  <a class="nav-link active" href="../">
+                  <a class="nav-link active" href="../../">
                   <i class="ni ni-tv-2 text-primary"></i>
                   <span class="nav-link-text">Tableau de bord</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="../articles">
+                  <a class="nav-link" href="../../articles">
                   <i class="ni ni-book-bookmark text-orange"></i>
                   <span class="nav-link-text">Articles</span>
                   </a>
@@ -70,13 +70,13 @@
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="../individu">
+                  <a class="nav-link" href="../../individu">
                   <i class="ni ni-single-02 text-yellow"></i>
                   <span class="nav-link-text">Individus</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="logout">
+                  <a class="nav-link" href="../../logout">
                   <i class="ni ni-key-25 text-info"></i>
                   <span class="nav-link-text">Logout</span>
                   </a>
@@ -91,19 +91,19 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                <li class="nav-item">
-                  <a class="nav-link" href="creer_individu/">
+                  <a class="nav-link" href="../../creer_individu/">
                   <i class="ni ni-spaceship"></i>
                   <span class="nav-link-text">Cr&eacute;er un nouvel individu</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="creer_cible_routage/1/">
+                  <a class="nav-link" href="../../creer_cible_routage/1/">
                   <i class="ni ni-palette"></i>
                   <span class="nav-link-text">Cr&eacute;er une cible de routage</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="liste_anomalies">
+                  <a class="nav-link" href="../../liste_anomalies">
                   <i class="ni ni-ui-04"></i>
                   <span class="nav-link-text">Gestions anomalies</span>
                   </a>
@@ -113,31 +113,31 @@
                     <div class="collapse in" id="navbar-multilevel" style="">
                       <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                          <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
+                          <a href="../../envoi_mail" class="nav-link ">Envoi par mail</a>
                         </li>
                         <li class="nav-item">
-                          <a href="envoi_SMS" class="nav-link ">Envoi par SMS</a>
+                          <a href="../../envoi_SMS" class="nav-link ">Envoi par SMS</a>
                         </li>
                         <li class="nav-item">
-                          <a href="envoi_papier" class="nav-link ">Envoi par papier</a>
+                          <a href="../../envoi_papier" class="nav-link ">Envoi par papier</a>
                         </li>
                       </ul>
                     </div>
                   </li>
                <li class="nav-item">
-                  <a class="nav-link" href="valider_cible_routage">
+                  <a class="nav-link" href="../../valider_cible_routage">
                   <i class="ni ni-check-bold"></i>
                   <span class="nav-link-text">Valider une cible de routage</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="signaler_anomalie">
+                  <a class="nav-link" href="../../signaler_anomalie">
                   <i class="ni ni-notification-70"></i>
                   <span class="nav-link-text">Signaler une anomalie</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="envoi_mail">
+                  <a class="nav-link" href="../../envoi_mail">
                   <i class="ni ni-email-83"></i>
                   <span class="nav-link-text">Envoyer un mail</span>
                   </a>
@@ -400,7 +400,7 @@
                                                     <label class="form-control-label" for="exampleFormControlSelect3">Séléction d'individu(s)</label>
                                                     <select multiple="multiple" name="individus_selec" multiple class="form-control" id="exampleFormControlSelect3">
                                                         {% for individu in individus %}
-                                                        <option>{{ individu.nom }} {{ individu.prenom }}</option>
+                                                        <option>{{ individu.prenom }} {{ individu.nom }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>

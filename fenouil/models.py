@@ -25,6 +25,7 @@ class Individu(models.Model):
     categorie_soc = models.CharField(max_length=50)
     caracteristique_comm = models.CharField(max_length=50)
     date = models.CharField(max_length=50, default=None)
+    nom_complet = models.CharField(max_length=100)
 
     def __str__(self):
         return self.prenom + " " + self.nom

@@ -9,6 +9,9 @@ from fenouil.forms import MailForm
 import boto3
 import smtplib
 from email.message import EmailMessage
+import xml.etree.cElementTree as xml
+import xml.dom.minidom as test
+
 
 from django.core import serializers
 
@@ -222,6 +225,7 @@ def creer_individu(request):
                 categorie_soc = request.POST.get('csp'),
                 caracteristique_comm = request.POST.get('car_com'),
                 date = request.POST.get('date_naissance'),
+                nom_complet = request.POST.get('prenom') + " " +request.POST.get('nom'),  
                 )
 
             individu.save()
@@ -303,9 +307,60 @@ def creer_cible_routage(request, etape):
                 cible.save()
 
                 #On serialize la derniere cible de routage (celle que l'on vient de créer) en xml
-                #queryset = serializers.serialize('xml', CibleRoutage.objects.filter(pk=CibleRoutage.objects.count()-1))
+
+                root=xml.Element("CibleRoutage")
+                support=xml.SubElement(root, "support")
+                support.text = type_canal
+
+                liste_individus=xml.SubElement(root, "liste_individus")
+                for individu in individus_selec:
+                    try:
+                        nouvel_individu = Individu.objects.get(nom_complet = individu)
+                    except SomeModel.DoesNotExist:
+                        go = None
+                    
+                    individu_xml=xml.SubElement(liste_individus, "individu")
+
+                    mail_xml= xml.SubElement(individu_xml, "mail")
+                    mail_xml.text = nouvel_individu.mail
+
+                    numero= xml.SubElement(individu_xml, "numero")
+                    numero.text = str(nouvel_individu.num)
+
+                    ville= xml.SubElement(individu_xml, "ville")
+                    ville.text = nouvel_individu.ville
+
+
+                nom=xml.SubElement(root, "Nom")
+                nom.text = titre
+
+                description_xml=xml.SubElement(root, "description")
+                description_xml.text = description
+                tree = xml.ElementTree(root)
+
+                liste_articles=xml.SubElement(root, "liste_articles")
+                for article in articles_selec:
+                    try:
+                        nouvel_article = Item.objects.get(titre = article)
+                    except SomeModel.DoesNotExist:
+                        go = None
+                    
+                    article_xml=xml.SubElement(liste_articles, "articles")
+
+                    titre_xml= xml.SubElement(article_xml, "nom")
+                    titre_xml.text = nouvel_article.titre
+
+                    prix_xml= xml.SubElement(article_xml, "prix")
+                    prix_xml.text = str(nouvel_article.prix)
+
+
+                xmlstr = test.parseString(xml.tostring(root)).toprettyxml(indent="   ")
+
+                nom_fichier = "media/CibleRoutageXML/" + str(cible.pk) + ".xml"
+
+                with open(nom_fichier, "w") as f:
+                    f.write(xmlstr)
                 
-                #return HttpResponse(queryset, content_type="application/xml")
 
                 return render(request, 'fenouil/creer_cible_routage_1.html', {'individus': individus})
 
@@ -315,20 +370,22 @@ def creer_cible_routage(request, etape):
             return render(request, '404.html')
 
 def valider_cible_routage(request):
+    cibles_filtrees = CibleRoutage.objects.filter(statut=False)
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
         if request.method == 'POST':
+            if "valide" in request.POST:
+                cible = CibleRoutage.objects.get(pk=request.POST.get('pk'))
+                cible.statut = True
+                cible.save()
 
-            cible = CibleRoutage.objects.get(pk=request.POST.get('pk'))
+                return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles_filtrees})
 
-            print('Avant = ',cible.statut)
-            cible.statut = True
-            cible.save()
-
-            print('Après = ', cible.statut)
-
-            return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles})
+            elif "display" in request.POST:
+                nom_redirection = "media/CibleRoutageXML/" + request.POST.get('pk') + ".xml"
+                return HttpResponse(open(nom_redirection).read(), content_type="application/xml")
 
         else:
-            return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles})
+            return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles_filtrees})
+
