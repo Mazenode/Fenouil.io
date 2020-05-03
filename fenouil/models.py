@@ -59,3 +59,29 @@ class CibleRoutage(models.Model):
 
     def __str__(self):
         return self.titre + " - " + self.type_canal
+
+class ItemCommande(models.Model):
+    item_existant = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='article', default=None)
+    quantite = models.IntegerField(default=0)
+
+class Commande(models.Model):
+    individu = models.ForeignKey(Individu, on_delete=models.CASCADE) 
+    type_reglement = models.CharField(max_length=20)
+    montant = models.IntegerField()
+    articles = models.ManyToManyField(ItemCommande)
+    valide = models.CharField(max_length=20)
+
+    class Meta:
+        abstract = True
+
+class CommandeCheque(Commande):
+    num_cheque = models.IntegerField()
+    nom_banque = models.CharField(max_length=100)
+    signe = models.BooleanField(default=True)
+
+
+class CommandeCarteBancaire(Commande):
+    num_carte = models.IntegerField()
+    date_expiration = models.CharField(max_length=5)
+    carte_valide = models.BooleanField(default=True)
+

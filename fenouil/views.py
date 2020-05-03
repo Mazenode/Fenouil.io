@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from fenouil.models import Item, Individu, Envoi, Anomalie, CibleRoutage
+from fenouil.models import Item, Individu, Envoi, Anomalie, CibleRoutage, ItemCommande, Commande, CommandeCheque, CommandeCarteBancaire
 from fenouil.forms import MailForm
 import boto3
 import smtplib
@@ -230,7 +230,7 @@ def creer_individu(request):
 
             individu.save()
 
-            return render(request, 'fenouil/creer_individu.html')
+            return HttpResponseRedirect('../creer_individu')
 
         else :
             return render(request, 'fenouil/creer_individu.html')
@@ -389,3 +389,96 @@ def valider_cible_routage(request):
         else:
             return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles_filtrees})
 
+def saisir_commande(request):
+    if not request.user.is_authenticated:
+        return render(request, 'fenouil/accueil.html')
+    else:
+        if request.method == 'POST':
+
+            individu = Individu.objects.get(nom_complet= request.POST.get('individu'))
+            liste_articles = request.POST.getlist('liste_article')
+            type_reglement = request.POST.get('type_reglement')
+            montant = request.POST.get('montant_commande')
+            num = request.POST.get('num')
+
+            if (type_reglement == 'Chèque'):
+                nom_banque = request.POST.get('nom-date_value')
+                if(request.POST.get('etat-valide') == 'Signé'):
+                    etat_cheque = True
+                else :
+                    etat_cheque = False
+
+                commande_cheque = CommandeCheque(
+                        individu=individu,
+                        type_reglement=type_reglement,
+                        montant=montant,
+                        num_cheque=num,
+                        nom_banque=nom_banque,
+                        signe=etat_cheque,
+                    )
+                commande_cheque.save()
+
+            elif (type_reglement == 'Carte bancaire'):
+                date = request.POST.get('nom-date_value')
+                if(request.POST.get('etat-valide') == 'valide'):
+                    etat_carte = True
+                else :
+                    etat_carte = False
+
+                commande_carte = CommandeCarteBancaire(
+                        individu=individu,
+                        type_reglement=type_reglement,
+                        montant=montant,
+                        num_carte=num,
+                        date_expiration=date,
+                        carte_valide=etat_carte,
+                    )
+                commande_carte.save()
+
+
+            liste = []
+            compteur = request.POST.get('compteur')
+
+            for i in range(1, int(compteur)+1):
+                article = request.POST.get('item'+str(i))
+                item_commande = ItemCommande(item_existant = Item.objects.get(titre=article), quantite = request.POST.get('quantite'+str(i)))
+                item_commande.save()
+                liste.append(item_commande)
+
+
+            #On calcule le total
+            total = 0
+            for item in liste:
+                total += item.item_existant.prix * float(item.quantite)
+
+            
+
+            if (type_reglement == 'Chèque'):
+                commande_cheque.articles.add(*liste)
+
+                #On change le statut de la commande en fonction des anomalies
+                if (total != float(montant)):
+                    CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='En attente')
+                    commande_cheque.refresh_from_db()
+                elif (etat_cheque != 'True'):
+                    CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='En attente')
+                    commande_cheque.refresh_from_db()
+                    print('pas ok')
+                else :
+                    CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='valide')
+                    commande_cheque.refresh_from_db()
+
+            elif (type_reglement == 'Carte bancaire'):
+                commande_carte.articles.add(*liste)
+
+                #On change le statut de la commande en fonction des anomalies
+                if (total != float(montant)):
+                    commande_carte.valide = 'En attente'
+                else :
+                    commande_carte.valide = 'valide'
+            
+ 
+            return HttpResponseRedirect('/saisir_commande')
+
+        else:
+            return render(request, 'fenouil/saisir_commande.html', {'individus': individus, 'items': items})

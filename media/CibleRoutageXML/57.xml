@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<CibleRoutage>
+   <support>Mail</support>
+   <liste_individus>
+      <individu>
+         <mail>elon.musk@spacex.com</mail>
+         <numero>33624496880</numero>
+         <ville>Hawthorne</ville>
+      </individu>
+   </liste_individus>
+   <Nom>QDS</Nom>
+   <description>Qsd</description>
+   <liste_articles>
+      <articles>
+         <nom>Perceuse à percussion filaire BOSCH PROFESSIONAL Gsb 24-2, 1100 W</nom>
+         <prix>32.0</prix>
+      </articles>
+   </liste_articles>
+</CibleRoutage>
