@@ -12,7 +12,7 @@
     </div>
     <!-- Card body -->
     <div class="card-body">
-
+        {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
         <!-- Input groups with icon -->
         <div class="row">
             <div class="col-md-6">
@@ -28,7 +28,7 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <select class="form-control" data-toggle="select" name="mail2">
+                    <select class="form-control" data-toggle="select" name="mail2" >
                     <option>Ou choisir le mail d'un de vos clients</option>
                          {% for individu in individus %}
                              <option>{{ individu.nom }} {{ individu.prenom }}</option>
@@ -73,6 +73,62 @@
             </div>
 
         </div>
+        {% endif %}
+        {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
+        <!-- Input groups with icon -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="example3cols1Input">Choisir la commande concernée :</label>
+                    <select class="form-control" data-toggle="select" name="mail2">
+                         {% for individu in individus %}
+                             <option>{{ individu.nom }} {{ individu.prenom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="example3cols1Input">Client lié à la commande :</label>
+                    <input name="sujet" class="form-control" placeholder="Quentin Chaignaud" required type="text" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="example3cols1Input">Sujet :</label>
+                    <div class="input-group input-group-merge">
+
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input name="sujet" class="form-control" required type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="example3cols1Input">Anomalies liées à la commande :</label>
+                    <select multiple class="form-control" id="exampleFormControlSelect3">
+                      
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{ form.media }}
+                    {{ form }}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </form>
 {% endblock form %}

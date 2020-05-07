@@ -1,16 +1,18 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, HttpResponse
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from fenouil.models import Item, Individu, Envoi, Anomalie, CibleRoutage, ItemCommande, Commande, CommandeCheque, CommandeCarteBancaire
+from fenouil.models import Item, Individu, Anomalie, CibleRoutage, ItemCommande, Commande, CommandeCheque, CommandeCarteBancaire, Envoi
 from fenouil.forms import MailForm
 import boto3
 import smtplib
 from email.message import EmailMessage
 import xml.etree.cElementTree as xml
 import xml.dom.minidom as test
+import json
 
 
 from django.core import serializers
@@ -19,14 +21,18 @@ individus = Individu.objects.all()
 items = Item.objects.all()
 anomalies = Anomalie.objects.all()
 cibles = CibleRoutage.objects.all()
+commandes_cheque = CommandeCheque.objects.all()
+commandes_carte = CommandeCarteBancaire.objects.all()
 
 def accueil(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
-
+        #On calcul les différents pourcentages à afficher sur le dashboard
         nombre_anomalies_anciennes = 0
         nombre_anomalies_recentes = 0
+        nombre_commandes_anciennes = 0
+        nombre_commandes_recentes = 0
 
         for anomalie in anomalies:
             if (anomalie.pub_date.month != timezone.now().month):
@@ -34,27 +40,98 @@ def accueil(request):
 
             else:
                 nombre_anomalies_recentes += 1
-        
-        pourcentage_anomalies = ((nombre_anomalies_recentes - nombre_anomalies_anciennes)/ nombre_anomalies_anciennes) * 100
+
+        if (nombre_anomalies_recentes == 0 or nombre_anomalies_anciennes == 0):
+            pourcentage_anomalies = 'Nan'
+        else :
+            pourcentage_anomalies =  getPourcentage(nombre_anomalies_recentes, nombre_anomalies_anciennes)
+
+        #Graphe des ventes
+        tous_les_mois = ['jan', 'fev', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sep', 'oct', 'nov', 'dec']
+        liste_benef = []
+
+
+        index = timezone.now().month-1
+        liste_mois = []
+
+        for i in range(8):
+            if(index - 1 == -1):
+                index = 12
+            liste_mois.append(tous_les_mois[index-i])
+
+        liste_mois.reverse()
+
+        liste_benef = []
+        liste_benef_carte = []
+        liste_benef_cheque = []
+
+        for mois in liste_mois:
+            total = 0
+
+            for commande in CommandeCheque.objects.all():
+                
+                if (commande.pub_date.month == liste_mois.index(mois)):
+                    total+=commande.montant
+                    
+            liste_benef_cheque.append(total)
+
+            for commande in CommandeCarteBancaire.objects.all():
+                
+                if (commande.pub_date.month == liste_mois.index(mois)):
+                    total+=commande.montant
+                    
+            liste_benef_carte.append(total)
+
+        liste_benef = [x + y for x, y in zip(liste_benef_cheque, liste_benef_carte)]
+
+        valeur = liste_benef[6:8]
+        liste_benef.insert(0, valeur[0])
+        liste_benef.insert(1, valeur[1])
+
+        print(getPermissionsUser(request))
+
+        json_mois = json.dumps(liste_mois)
+        json_benef = json.dumps(liste_benef)
+
+        #Graphe des envois de publicités
+
+        liste_6_mois = liste_mois[2:8]
+        print(liste_6_mois)
+
+        json_6_mois = json.dumps(liste_6_mois)
+
 
         if (nombre_anomalies_anciennes != 0):
             return render(request, 'fenouil/dashboard.html',
-                { 'nombre_anomalies': nombre_anomalies_recentes, 'ratio_anomalies': round(pourcentage_anomalies, 2) }
-                )
+                { 
+                    'nombre_anomalies': nombre_anomalies_recentes, 
+                    'ratio_anomalies': round(pourcentage_anomalies, 2),
+                    'nombre_commandes': 0, 
+                    'ratio_commandes': round(0, 2),
+                    'liste_mois':json_mois,
+                    'liste_benef':json_benef,
+                    'liste_6_mois':json_6_mois,
+                    'liste_permissions':getPermissionsUser(request),
+                    'liste_identifiants_user':getNomUser(request)
+                })
+
         else:
             return render(request, '404.html')
+
+def getPourcentage(recent, ancien):
+    return ((recent - ancien)/ ancien) * 100
 
 def articles(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
-        return render(request, 'fenouil/articles.html', {'items': items})
+        return render(request, 'fenouil/articles.html', {'items': items,'liste_permissions':getPermissionsUser(request)})
 
 def individu(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
-        return render(request, 'fenouil/individu.html', {'individus': individus})
+        return render(request, 'fenouil/individu.html', {'individus': individus,'liste_permissions':getPermissionsUser(request)})
 
 def envoi_mail(request):
     if not request.user.is_authenticated:
@@ -108,13 +185,17 @@ def envoi_mail(request):
 
                     smtp.send_message(msg)
 
+                envoi = Envoi(
+                    date_envoi = timezone.now()
+                    )
+                envoi.save()
         
-                return render(request, 'fenouil/envoi_mail_form.html', {'form' : form})
+                return render(request, 'fenouil/envoi_mail_form.html', {'form' : form,'liste_permissions':getPermissionsUser(request)})
 
         else :
             form = MailForm()
 
-        return render(request, 'fenouil/envoi_mail_form.html', {'form' : form})
+        return render(request, 'fenouil/envoi_mail_form.html', {'form' : form,'liste_permissions':getPermissionsUser(request)})
 
 def envoi_SMS(request):
     if not request.user.is_authenticated:
@@ -154,11 +235,17 @@ def envoi_SMS(request):
             #Permet l'envoi de messages
             individu = boto3.client('sns', 'eu-west-1')
             individu.publish(PhoneNumber = num_tel, Message = texte)
+
+            envoi = Envoi(
+                    date_envoi = timezone.now()
+                    )
+            envoi.save()
+        
             
-            return render(request, 'fenouil/envoi_SMS.html')
+            return render(request, 'fenouil/envoi_SMS.html',{'liste_permissions':getPermissionsUser(request)})
 
         else :
-            return render(request, 'fenouil/envoi_SMS.html')
+            return render(request, 'fenouil/envoi_SMS.html',{'liste_permissions':getPermissionsUser(request)})
 
 def envoi_papier(request):
     if not request.user.is_authenticated:
@@ -195,14 +282,17 @@ def envoi_papier(request):
                 return redirect('envoi_papier')
             else :
                 num = request.POST.get('num')
-            
-            envoi = Envoi(date = date, num = num)
-            envoi.save()
 
-            return render(request, 'fenouil/envoi_papier.html')
+            envoi = Envoi(
+                    date_envoi = timezone.now()
+                    )
+            envoi.save()
+        
+
+            return render(request, 'fenouil/envoi_papier.html',{'liste_permissions':getPermissionsUser(request)})
 
         else :
-            return render(request, 'fenouil/envoi_papier.html')
+            return render(request, 'fenouil/envoi_papier.html',{'liste_permissions':getPermissionsUser(request)})
 
 def creer_individu(request):
     if not request.user.is_authenticated:
@@ -233,14 +323,40 @@ def creer_individu(request):
             return HttpResponseRedirect('../creer_individu')
 
         else :
-            return render(request, 'fenouil/creer_individu.html')
+            return render(request, 'fenouil/creer_individu.html',{'liste_permissions':getPermissionsUser(request)})
 
 def liste_anomalies(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
     else:
-        return render(request, 'fenouil/liste_anomalies.html', {'anomalies': anomalies})
+        if request.method == 'POST':
 
+            num_commande = request.POST.get('anomalie_id')
+            s = []
+            n = []
+
+            for lettre in num_commande:
+                if lettre.isalpha():
+                    s.append(lettre)
+                elif lettre.isdigit():
+                    n.append(lettre)
+
+            s = ''.join(s)
+            n = ''.join(n)
+            
+            if s == 'cheque':
+                CommandeCheque.objects.filter(pk= n).update(valide='valide')
+                Anomalie.objects.filter(num_commande=num_commande).delete()
+            elif s == 'carte':
+                CommandeCarteBancaire.objects.filter(pk= n).update(valide='valide')
+                Anomalie.objects.filter(num_commande=num_commande).delete()
+
+
+            return render(request, 'fenouil/liste_anomalies.html', {'anomalies': anomalies,'liste_permissions':getPermissionsUser(request)})
+
+        else :
+            return render(request, 'fenouil/liste_anomalies.html', {'anomalies': anomalies,'liste_permissions':getPermissionsUser(request)})
+        
 def signaler_anomalie(request):
     if not request.user.is_authenticated:
         return render(request, 'fenouil/accueil.html')
@@ -256,10 +372,10 @@ def signaler_anomalie(request):
 
             anomalie.save()
 
-            return render(request, 'fenouil/signaler_anomalie.html')
+            return render(request, 'fenouil/signaler_anomalie.html',{'liste_permissions':getPermissionsUser(request)})
 
         else :
-            return render(request, 'fenouil/signaler_anomalie.html')
+            return render(request, 'fenouil/signaler_anomalie.html',{'liste_permissions':getPermissionsUser(request)})
 
 def creer_cible_routage(request, etape):
 
@@ -281,7 +397,7 @@ def creer_cible_routage(request, etape):
                 return HttpResponseRedirect('../../creer_cible_routage/2/')
 
             else :
-                return render(request, 'fenouil/creer_cible_routage_1.html', {'individus': individus})
+                return render(request, 'fenouil/creer_cible_routage_1.html', {'individus': individus,'liste_permissions':getPermissionsUser(request)})
         elif (etape == 2):
             if request.method == 'POST':
 
@@ -362,10 +478,10 @@ def creer_cible_routage(request, etape):
                     f.write(xmlstr)
                 
 
-                return render(request, 'fenouil/creer_cible_routage_1.html', {'individus': individus})
+                return render(request, 'fenouil/creer_cible_routage_1.html', {'individus': individus,'liste_permissions':getPermissionsUser(request)})
 
             else :
-                return render(request, 'fenouil/creer_cible_routage_2.html', {'items': items})
+                return render(request, 'fenouil/creer_cible_routage_2.html', {'items': items,'liste_permissions':getPermissionsUser(request)})
         else:
             return render(request, '404.html')
 
@@ -380,14 +496,14 @@ def valider_cible_routage(request):
                 cible.statut = True
                 cible.save()
 
-                return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles_filtrees})
+                return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles_filtrees,'liste_permissions':getPermissionsUser(request)})
 
             elif "display" in request.POST:
                 nom_redirection = "media/CibleRoutageXML/" + request.POST.get('pk') + ".xml"
                 return HttpResponse(open(nom_redirection).read(), content_type="application/xml")
 
         else:
-            return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles_filtrees})
+            return render(request, 'fenouil/valider_cible_routage.html', {'cibles': cibles_filtrees,'liste_permissions':getPermissionsUser(request)})
 
 def saisir_commande(request):
     if not request.user.is_authenticated:
@@ -415,12 +531,13 @@ def saisir_commande(request):
                         num_cheque=num,
                         nom_banque=nom_banque,
                         signe=etat_cheque,
+                        pub_date=timezone.now()
                     )
                 commande_cheque.save()
 
             elif (type_reglement == 'Carte bancaire'):
                 date = request.POST.get('nom-date_value')
-                if(request.POST.get('etat-valide') == 'valide'):
+                if(request.POST.get('etat-valide') == 'Valide'):
                     etat_carte = True
                 else :
                     etat_carte = False
@@ -432,6 +549,7 @@ def saisir_commande(request):
                         num_carte=num,
                         date_expiration=date,
                         carte_valide=etat_carte,
+                        pub_date=timezone.now()
                     )
                 commande_carte.save()
 
@@ -460,25 +578,82 @@ def saisir_commande(request):
                 if (total != float(montant)):
                     CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='En attente')
                     commande_cheque.refresh_from_db()
-                elif (etat_cheque != 'True'):
-                    CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='En attente')
-                    commande_cheque.refresh_from_db()
-                    print('pas ok')
+                    anomalie = Anomalie(
+                            num_commande =  'cheque' + str(commande_cheque.pk),
+                            statut = 'Erreur sur le montant',
+                            pub_date = timezone.now(),
+                            individu = individu
+                            )
+                    anomalie.save() 
                 else :
                     CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='valide')
                     commande_cheque.refresh_from_db()
+
+                if (etat_cheque != 'True'):
+                    CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='En attente')
+                    commande_cheque.refresh_from_db()       
+                    anomalie = Anomalie(
+                            num_commande =  'cheque' + str(commande_cheque.pk),
+                            statut = 'Problème sur le moyen de paiement',
+                            pub_date = timezone.now(),
+                            individu = individu
+                            )
+                    anomalie.save() 
+                else :
+                    CommandeCheque.objects.filter(pk = commande_cheque.pk).update(valide='valide')
+                    commande_cheque.refresh_from_db()
+                
+                    
 
             elif (type_reglement == 'Carte bancaire'):
                 commande_carte.articles.add(*liste)
 
                 #On change le statut de la commande en fonction des anomalies
                 if (total != float(montant)):
-                    commande_carte.valide = 'En attente'
+                    print('pas le meme montant')
+                    CommandeCarteBancaire.objects.filter(pk = commande_carte.pk).update(valide='En attente')
+                    commande_carte.refresh_from_db()
+                    anomalie = Anomalie(
+                            num_commande =  'carte' + str(commande_carte.pk),
+                            statut = 'Erreur sur le montant',
+                            pub_date = timezone.now(),
+                            individu = individu
+                            )
+                    anomalie.save() 
                 else :
-                    commande_carte.valide = 'valide'
+                    CommandeCarteBancaire.objects.filter(pk = commande_carte.pk).update(valide='valide')
+                    commande_carte.refresh_from_db()
+
+                if (etat_carte != True):
+                    print('pas true')
+                    CommandeCarteBancaire.objects.filter(pk = commande_carte.pk).update(valide='En attente')
+                    commande_carte.refresh_from_db()       
+                    anomalie = Anomalie(
+                            num_commande =  'carte' + str(commande_carte.pk),
+                            statut = 'Problème sur le moyen de paiement',
+                            pub_date = timezone.now(),
+                            individu = individu
+                            )
+                    anomalie.save() 
+                else :
+                    CommandeCarteBancaire.objects.filter(pk = commande_carte.pk).update(valide='valide')
+                    commande_carte.refresh_from_db()
             
  
             return HttpResponseRedirect('/saisir_commande')
 
         else:
-            return render(request, 'fenouil/saisir_commande.html', {'individus': individus, 'items': items})
+            return render(request, 'fenouil/saisir_commande.html', {'individus': individus, 'items': items,'liste_permissions':getPermissionsUser(request)})
+
+def getPermissionsUser(request):
+    liste_groupe_user = []
+    for groupe in request.user.groups.all():
+            liste_groupe_user.append(str(groupe))
+    return liste_groupe_user
+
+def getNomUser(request):
+    liste_identifiants_user = []
+    liste_identifiants_user.append(request.user.first_name)
+    liste_identifiants_user.append(request.user.last_name)
+    return liste_identifiants_user
+    

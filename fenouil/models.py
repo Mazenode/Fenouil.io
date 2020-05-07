@@ -31,16 +31,16 @@ class Individu(models.Model):
         return self.prenom + " " + self.nom
 
 class Envoi(models.Model):
-    date = models.CharField(max_length=8)
-    num = models.CharField(max_length=100)
+    date_envoi = models.DateTimeField('Date d\'envoi', default=None)
 
 class Mail(models.Model):
     contenu = RichTextField(verbose_name="")
 
+
 class Anomalie(models.Model):
     num_commande = models.CharField(max_length=50)
-    statut = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
+    individu =  models.ForeignKey(Individu, on_delete=models.CASCADE, related_name='individu_commande', null=True, default=None) 
+    statut = models.CharField(max_length=200)
     pub_date = models.DateTimeField('Date de publication', default=None)
 
 
@@ -65,11 +65,12 @@ class ItemCommande(models.Model):
     quantite = models.IntegerField(default=0)
 
 class Commande(models.Model):
-    individu = models.ForeignKey(Individu, on_delete=models.CASCADE) 
+    individu = models.ForeignKey(Individu, on_delete=models.CASCADE ) 
     type_reglement = models.CharField(max_length=20)
     montant = models.IntegerField()
     articles = models.ManyToManyField(ItemCommande)
     valide = models.CharField(max_length=20)
+    pub_date = models.DateTimeField('Date de création', default=None)
 
     class Meta:
         abstract = True
@@ -82,6 +83,6 @@ class CommandeCheque(Commande):
 
 class CommandeCarteBancaire(Commande):
     num_carte = models.IntegerField()
-    date_expiration = models.CharField(max_length=5)
+    date_expiration = models.DateTimeField('Date d\'expiration', default=None)
     carte_valide = models.BooleanField(default=True)
 

@@ -70,7 +70,7 @@
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="logout">
+                  <a class="nav-link" href="accounts/logout">
                   <i class="ni ni-key-25 text-info"></i>
                   <span class="nav-link-text">Logout</span>
                   </a>
@@ -84,24 +84,31 @@
             </h6>
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
+              {% if 'Assistants de saisie' in liste_permissions or 'Administrateur de données' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                   <a class="nav-link" href="creer_individu/">
                   <i class="ni ni-spaceship"></i>
                   <span class="nav-link-text">Cr&eacute;er un nouvel individu</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Prospection' in liste_permissions or 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                   <a class="nav-link" href="creer_cible_routage/1/">
                   <i class="ni ni-palette"></i>
                   <span class="nav-link-text">Cr&eacute;er une cible de routage</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                   <a class="nav-link" href="liste_anomalies">
                   <i class="ni ni-ui-04"></i>
                   <span class="nav-link-text">Gestions anomalies</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Système d’édition' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                     <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
                     <div class="collapse in" id="navbar-multilevel" style="">
@@ -118,30 +125,39 @@
                       </ul>
                     </div>
                   </li>
+                  {% endif %}
+                  {% if 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                   <a class="nav-link" href="valider_cible_routage">
                   <i class="ni ni-check-bold"></i>
                   <span class="nav-link-text">Valider une cible de routage</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                   <a class="nav-link" href="signaler_anomalie">
                   <i class="ni ni-notification-70"></i>
                   <span class="nav-link-text">Signaler une anomalie</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                   <a class="nav-link" href="envoi_mail">
                   <i class="ni ni-email-83"></i>
                   <span class="nav-link-text">Envoyer un mail</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                 <li class="nav-item">
                   <a class="nav-link" href="saisir_commande">
                   <i class="ni ni-cart"></i>
                   <span class="nav-link-text">Saisir une commande</span>
                   </a>
                </li>
+               {% endif %}
             </ul>
          </div>
       </div>
@@ -194,7 +210,9 @@
                     <img alt="Image placeholder" src="{% static 'assets/img/theme/team-4.jpg' %}">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">Quentin Chaignaud</span>
+                    <span class="mb-0 text-sm  font-weight-bold">{% for nom in liste_identifiants_user %}
+                    {{ nom }} 
+                  {% endfor %}</span>
                   </div>
                 </div>
               </a>
@@ -238,7 +256,7 @@
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                        <i class="ni ni-active-40"></i>
+                        <i class="ni ni-settings"></i>
                       </div>
                     </div>
                   </div>
@@ -260,16 +278,20 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Nouveaux clients</h5>
-                      <span class="h2 font-weight-bold mb-0">2.356</span>
+                      <span class="h2 font-weight-bold mb-0">{{ nombre_nouveaux_clients }}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                        <i class="ni ni-chart-pie-35"></i>
+                        <i class="ni ni-circle-08"></i>
                       </div>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3,48%</span>
+                     {% if ratio_client > 0 %}
+                      <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ ratio_client }}%</span>
+                      {% else %}
+                      <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i> -{{ ratio_client }}%</span>
+                      {% endif %}
                     <span class="text-nowrap">Depuis le mois dernier</span>
                   </p>
                 </div>
@@ -282,7 +304,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Nouvelles commandes</h5>
-                      <span class="h2 font-weight-bold mb-0">924</span>
+                      <span class="h2 font-weight-bold mb-0">{{ nombre_commandes }}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -291,7 +313,11 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3,48%</span>
+                    {% if ratio_commandes > 0 %}
+                      <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ ratio_commandes }}%</span>
+                      {% else %}
+                      <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i> -{{ ratio_commandes }}%</span>
+                      {% endif %}
                     <span class="text-nowrap">Depuis le mois dernier</span>
                   </p>
                 </div>
@@ -331,25 +357,10 @@
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
-                  <h6 class="text-light text-uppercase ls-1 mb-1">Vue globale</h6>
+                  <h6 class="text-light text-uppercase ls-1 mb-1">Seules les commandes validées sont comptabilisées</h6>
                   <h5 class="h3 text-white mb-0">Chiffre d'affaire</h5>
                 </div>
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="€" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Mois</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="€" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Semaine</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                
               </div>
             </div>
             <div class="card-body">
@@ -386,10 +397,10 @@
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">Articles les plus visit&eacute;s</h3>
+                  <h3 class="mb-0">Articles les plus commandés</h3>
                 </div>
                 <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">Voir tous</a>
+                  <a href="articles" class="btn btn-sm btn-primary">Voir tous</a>
                 </div>
               </div>
             </div>
@@ -399,7 +410,7 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Nom de l'article</th>
-                    <th scope="col">Visiteurs</th>
+                    <th scope="col">Quantité moyenne par achat</th>
                     <th scope="col">Ventes</th>
                     <th scope="col">Evolution apr&egrave;s envoi de publicit&Eacute;s</th>
                   </tr>
@@ -532,6 +543,140 @@
   <script src="{% static 'assets/vendor/chart.js/dist/Chart.extension.js'%}"></script>
   <!-- Argon JS -->
   <script src="{% static 'assets/js/argon.js'%}"></script>
+  <script>
+
+
+'use strict';
+
+//
+// Sales chart
+//
+
+var SalesChart = (function() {
+
+  // Variables
+
+  var $chart = $('#chart-sales-dark');
+
+
+  // Methods
+  var derniersMois = {{ liste_mois|safe }};
+  
+  var defaultData = {{ liste_benef|safe }};
+
+  function init($chart) {
+
+
+    var salesChart = new Chart($chart, {
+      type: 'line',
+      options: {
+        scales: {
+          yAxes: [{
+            gridLines: {
+              lineWidth: 1,
+              color: Charts.colors.gray[900],
+              zeroLineColor: Charts.colors.gray[900]
+            },
+            ticks: {
+              callback: function(value) {
+                if (!(value % 10)) {
+                  return '€' + value + 'k';
+                }
+              }
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function(item, data) {
+              var label = data.datasets[item.datasetIndex].label || '';
+              var yLabel = item.yLabel;
+              var content = '';
+
+              if (data.datasets.length > 1) {
+                content += 'nombre total de ventes';
+              }
+
+              content += 'nombre total de ventes';
+              return content;
+            }
+          }
+        }
+      },
+      data: {
+        labels: derniersMois,
+        datasets: [{
+          label: 'Somme totale des ventes :',
+          data: defaultData
+        }]
+      }
+    });
+
+    // Save to jQuery object
+
+    $chart.data('chart', salesChart);
+
+  };
+
+
+  // Events
+
+  if ($chart.length) {
+    init($chart);
+  }
+
+})();
+
+
+//
+// Bars chart
+//
+
+var BarsChart = (function() {
+
+  //
+  // Variables
+  //
+
+  var $chart = $('#chart-bars');
+
+
+  //
+  // Methods
+  //
+
+  // Init chart
+  function initChart($chart) {
+
+     var derniersMois = {{ liste_6_mois|safe }};
+  
+  var defaultData = {{ liste_envoi|safe }};
+
+    // Create chart
+    var ordersChart = new Chart($chart, {
+      type: 'bar',
+      data: {
+        labels: derniersMois,
+        datasets: [{
+          label: 'Nb envois',
+          data: [25, 20, 30, 22, 17, 29]
+        }]
+      }
+    });
+
+    // Save to jQuery object
+    $chart.data('chart', ordersChart);
+  }
+
+
+  // Init chart
+  if ($chart.length) {
+    initChart($chart);
+  }
+
+})();
+
+  </script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  -->
- {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard PRO - Premium Bootstrap 4 Admin Template</title>
+  <title>Liste d'anomalies</title>
   <!-- Favicon -->
   <link rel="icon" href="{% static 'assets/img/brand/favicon.png'%}" type="image/png">
   <!-- Fonts -->
@@ -29,14 +29,14 @@
   <link rel="stylesheet" href="{% static 'assets/vendor/nucleo/css/nucleo.css'%}" type="text/css">
   <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css'%}" type="text/css">
   <!-- Page plugins -->
-  <link rel="stylesheet" href="{% static 'assets/vendor/animate.css/animate.min.css'%}">
-  <link rel="stylesheet" href="{% static 'assets/vendor/sweetalert2/dist/sweetalert2.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css'%}">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="{% static 'assets/css/argon.css'%}" type="text/css">
 </head>
 
 <body>
-  <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
    <div class="scrollbar-inner">
       <!-- Brand -->
@@ -51,31 +51,25 @@
             <!-- Nav items -->
             <ul class="navbar-nav">
                <li class="nav-item">
-                  <a class="nav-link" href="../">
+                  <a class="nav-link active" href="../">
                   <i class="ni ni-tv-2 text-primary"></i>
                   <span class="nav-link-text">Tableau de bord</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link active" href="../articles">
+                  <a class="nav-link" href="../articles">
                   <i class="ni ni-book-bookmark text-orange"></i>
                   <span class="nav-link-text">Articles</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="">
-                  <i class="ni ni-cart text-default"></i>
-                  <span class="nav-link-text">Commandes</span>
-                  </a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="../client">
+                  <a class="nav-link" href="../individu">
                   <i class="ni ni-single-02 text-yellow"></i>
-                  <span class="nav-link-text">Client</span>
+                  <span class="nav-link-text">Individus</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="logout">
+                  <a class="nav-link" href="accounts/logout">
                   <i class="ni ni-key-25 text-info"></i>
                   <span class="nav-link-text">Logout</span>
                   </a>
@@ -89,27 +83,34 @@
             </h6>
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
+              {% if 'Assistants de saisie' in liste_permissions or 'Administrateur de données' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="creer_client/">
+                  <a class="nav-link" href="creer_individu/">
                   <i class="ni ni-spaceship"></i>
-                  <span class="nav-link-text">Cr&eacute;er un nouveau client</span>
+                  <span class="nav-link-text">Cr&eacute;er un nouvel individu</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Prospection' in liste_permissions or 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="" target="_blank">
+                  <a class="nav-link" href="creer_cible_routage/1/">
                   <i class="ni ni-palette"></i>
-                  <span class="nav-link-text">Cr&eacute;er une publicit&eacute;</span>
+                  <span class="nav-link-text">Cr&eacute;er une cible de routage</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="" target="_blank">
+                  <a class="nav-link" href="liste_anomalies">
                   <i class="ni ni-ui-04"></i>
                   <span class="nav-link-text">Gestions anomalies</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Système d’édition' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
-                    <div class="collapse show" id="navbar-multilevel" style="">
+                    <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
+                    <div class="collapse in" id="navbar-multilevel" style="">
                       <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                           <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
@@ -123,12 +124,39 @@
                       </ul>
                     </div>
                   </li>
+                  {% endif %}
+                  {% if 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
+                  <a class="nav-link" href="valider_cible_routage">
                   <i class="ni ni-check-bold"></i>
                   <span class="nav-link-text">Valider une cible de routage</span>
                   </a>
                </li>
+               {% endif %}
+               {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
+               <li class="nav-item">
+                  <a class="nav-link" href="signaler_anomalie">
+                  <i class="ni ni-notification-70"></i>
+                  <span class="nav-link-text">Signaler une anomalie</span>
+                  </a>
+               </li>
+               {% endif %}
+               {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
+               <li class="nav-item">
+                  <a class="nav-link" href="envoi_mail">
+                  <i class="ni ni-email-83"></i>
+                  <span class="nav-link-text">Envoyer un mail</span>
+                  </a>
+               </li>
+               {% endif %}
+               {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
+                <li class="nav-item">
+                  <a class="nav-link" href="saisir_commande">
+                  <i class="ni ni-cart"></i>
+                  <span class="nav-link-text">Saisir une commande</span>
+                  </a>
+               </li>
+               {% endif %}
             </ul>
          </div>
       </div>
@@ -136,11 +164,7 @@
 </nav>
   <!-- Main content -->
   <div class="main-content" id="panel">
-    <!-- Topnav -->
-    </nav>
-  <!-- Main content -->
-  <div class="main-content" id="panel">
-    <!-- Topnav -->
+   <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -175,7 +199,6 @@
                 <i class="ni ni-zoom-split-in"></i>
               </a>
             </li>
-
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
@@ -209,22 +232,23 @@
       </div>
     </nav>
     <!-- Header -->
+    <!-- Header -->
     <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Gestion d'anomalies</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Anomalies</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Outils</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Gestion d'anomalies</li>
+                  <li class="breadcrumb-item active" aria-current="page">Gestion d'nomalies</li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">Nouveau mail</a>
+              <a href="../envoi_mail/" class="btn btn-sm btn-neutral" target="blank">Éditer un mail</a>
             </div>
           </div>
         </div>
@@ -232,58 +256,98 @@
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 card-wrapper">
-          <!-- Alerts -->
-          <div class="card">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+            <div class="card">
+            <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">Liste des anomalies</h3>
+              <h3 class="mb-0">Liste d'anomalies</h3>
+              <p class="text-sm mb-0">
+                La liste des anomalies en fonction de chaque commande.
+              </p>
             </div>
-            <div class="card-body">
-              {% for anomalie in anomalies %}
-                {% if anomalie.statut == 'Urgent' %}
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="alert-text"><strong>{{ anomalie.statut }} !</strong> <strong> n°{{ anomalie.num_commande }}</strong> {{ anomalie.description }}</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                {% elif anomalie.statut == 'A traiter rapidement' %}
-                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <span class="alert-text"><strong>{{ anomalie.statut }} !</strong> <strong> n°{{ anomalie.num_commande }}</strong> {{ anomalie.description }}</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                {% else %}
-                  <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <span class="alert-text"><strong>{{ anomalie.statut }} !</strong> <strong> n°{{ anomalie.num_commande }}</strong> {{ anomalie.description }}</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                {% endif %}
-              {% endfor %}
+            <div class="table-responsive py-4">
+              <table class="table table-flush" id="datatable-basic">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Individu concerné</th>
+                    <th>Numéro de commande</th>
+                    <th>Date de génération</th>
+                    <th>Type</th>
+                    <th>Archiver l'anomalie</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Individu concerné</th>
+                    <th>Numéro de commande</th>
+                    <th>Date de génération</th>
+                    <th>Type</th>
+                    <th>Archiver l'anomalie</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                   
+                {% for anomalie in anomalies %}
+
+                     <tr>
+                        <td>{{ anomalie.individu.nom }} {{ anomalie.individu.prenom }}</td>
+                        <td>{{ anomalie.num_commande }}</td>
+                        <td>{{ anomalie.pub_date }}</td>
+                        <td>{{ anomalie.statut }}</td>
+                        
+                          <td>
+                            <form method="post" id="post">
+                          {% csrf_token %} 
+                          <input type="hidden" name="anomalie_id" value="{{ anomalie.num_commande }}">
+                          <button  onClick="valider();" type="submit" class="btn btn-primary btn-sm">Passer l'anomalie en résolu</button>
+                          </form>
+                        </td>
+                        
+                     </tr>
+                     
+                {% endfor %}
+                
+                </tbody>
+              </table>
             </div>
           </div>
+
         </div>
       </div>
     </div>
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="{% static 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
-  <!-- Optional JS -->
-  <script src="{% static 'assets/vendor/sweetalert2/dist/sweetalert2.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+   <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+   <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'%}"></script>
+   <script src="{% static 'assets/vendor/js-cookie/js.cookie.js'%}"></script>
+   <script src="{% static 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js'%}"></script>
+   <script src="{% static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js'%}"></script>
+   <!-- Optional JS -->
+    <script src="{% static 'assets/vendor/datatables.net/js/jquery.dataTables.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.html5.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.flash.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-select/js/dataTables.select.min.js'%}"></script>
+   <script type="text/javascript">
+    $(document).ready(function(){
+        $('#datatable-basic').DataTable();
+    });
+    function valider(){
+        window.alert("L'anomalie à bien été traitée.");
+    };   
+    </script>
+
+
   <!-- Argon JS -->
-  <script src="{% static 'assets/js/argon.js?v=1.1.0' %}"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="{% static 'assets/js/demo.min.js' %}"></script>
+  <script src="{% static 'assets/js/argon.js' %}"></script>
+
+
 </body>
 
 </html>
