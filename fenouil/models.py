@@ -24,8 +24,9 @@ class Individu(models.Model):
     commentaires = models.CharField(max_length=300, default=None,blank=True, null=True)
     categorie_soc = models.CharField(max_length=50)
     caracteristique_comm = models.CharField(max_length=50)
-    date = models.CharField(max_length=50, default=None)
+    date = models.DateTimeField('Date naissance', default=None)
     nom_complet = models.CharField(max_length=100)
+    date_passage_client = models.DateTimeField('Date creation client', default=None,null=True, blank=True)
 
     def __str__(self):
         return self.prenom + " " + self.nom
@@ -86,3 +87,8 @@ class CommandeCarteBancaire(Commande):
     date_expiration = models.DateTimeField('Date d\'expiration', default=None)
     carte_valide = models.BooleanField(default=True)
 
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    user   = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to="Avatar/", blank=True, null=True)

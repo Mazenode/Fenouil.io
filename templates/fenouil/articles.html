@@ -1,18 +1,16 @@
-<!--
+<!-- =========================================================
+* Argon Dashboard PRO v1.1.0
 =========================================================
-* Argon Dashboard - v1.2.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
 
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
 
-* Copyright  Creative Tim (http://www.creative-tim.com)
-* Coded by www.creative-tim.com
-
-
+* Coded by Creative Tim
 
 =========================================================
+
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
+ -->
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -22,21 +20,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+  <title>Fenouil.io - Liste clients</title>
   <!-- Favicon -->
-  <link rel="icon" href="{% static 'assets/img/brand/favicon.png' %}" type="image/png">
+  <link rel="icon" href="{% static 'assets/img/brand/favicon.png'%}" type="image/png">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
-  <link rel="stylesheet" href="{% static 'assets/vendor/nucleo/css/nucleo.css' %}" type="text/css">
-  <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'assets/vendor/nucleo/css/nucleo.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css'%}" type="text/css">
   <!-- Page plugins -->
+  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css'%}">
   <!-- Argon CSS -->
-  <link rel="stylesheet" href="{% static 'assets/css/argon.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'assets/css/argon.css'%}" type="text/css">
 </head>
 
 <body>
-  <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
    <div class="scrollbar-inner">
       <!-- Brand -->
@@ -83,75 +83,75 @@
             </h6>
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
-              {% if 'Assistants de saisie' in liste_permissions or 'Administrateur de données ' in liste_permissions %}
+              {% if 'Assistants de saisie' in liste_permissions or 'Administrateur de données' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="creer_individu/">
+                  <a class="nav-link" href="../creer_individu/">
                   <i class="ni ni-spaceship"></i>
                   <span class="nav-link-text">Cr&eacute;er un nouvel individu</span>
                   </a>
                </li>
                {% endif %}
-               {% if 'Prospection' in liste_permissions or 'Directeur de la Stratégie' in liste_permissions %}
+               {% if 'Prospection' in liste_permissions or 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="creer_cible_routage/1/">
+                  <a class="nav-link" href="../creer_cible_routage/1/">
                   <i class="ni ni-palette"></i>
                   <span class="nav-link-text">Cr&eacute;er une cible de routage</span>
                   </a>
                </li>
                {% endif %}
-               {% if 'Gestionnaire administratif' in liste_permissions %}
+               {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="liste_anomalies">
+                  <a class="nav-link" href="../liste_anomalies">
                   <i class="ni ni-ui-04"></i>
                   <span class="nav-link-text">Gestions anomalies</span>
                   </a>
                </li>
                {% endif %}
-               {% if 'Système d’édition' in liste_permissions %}
+               {% if 'Système d’édition' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
                     <a href="#navbar-multilevel" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-multilevel"><i class="ni ni-send"></i>Envoyer une publicité</a>
                     <div class="collapse in" id="navbar-multilevel" style="">
                       <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                          <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
+                          <a href="../envoi_mail" class="nav-link ">Envoi par mail</a>
                         </li>
                         <li class="nav-item">
-                          <a href="envoi_SMS" class="nav-link ">Envoi par SMS</a>
+                          <a href="../envoi_SMS" class="nav-link ">Envoi par SMS</a>
                         </li>
                         <li class="nav-item">
-                          <a href="envoi_papier" class="nav-link ">Envoi par papier</a>
+                          <a href="../envoi_papier" class="nav-link ">Envoi par papier</a>
                         </li>
                       </ul>
                     </div>
                   </li>
                   {% endif %}
-                  {% if 'Directeur de la Stratégie' in liste_permissions %}
+                  {% if 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="valider_cible_routage">
+                  <a class="nav-link" href="../valider_cible_routage">
                   <i class="ni ni-check-bold"></i>
                   <span class="nav-link-text">Valider une cible de routage</span>
                   </a>
                </li>
                {% endif %}
-               {% if 'Assistants de saisie' in liste_permissions %}
+               {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="signaler_anomalie">
+                  <a class="nav-link" href="../signaler_anomalie">
                   <i class="ni ni-notification-70"></i>
                   <span class="nav-link-text">Signaler une anomalie</span>
                   </a>
                </li>
                {% endif %}
-               {% if 'Gestionnaire administratif' in liste_permissions %}
+               {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="envoi_mail">
+                  <a class="nav-link" href="../envoi_mail">
                   <i class="ni ni-email-83"></i>
                   <span class="nav-link-text">Envoyer un mail</span>
                   </a>
                </li>
                {% endif %}
-               {% if 'Assistants de saisie' in liste_permissions %}
+               {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                 <li class="nav-item">
-                  <a class="nav-link" href="saisir_commande">
+                  <a class="nav-link" href="../saisir_commande">
                   <i class="ni ni-cart"></i>
                   <span class="nav-link-text">Saisir une commande</span>
                   </a>
@@ -162,10 +162,9 @@
       </div>
    </div>
 </nav>
-
   <!-- Main content -->
   <div class="main-content" id="panel">
-    <!-- Topnav -->
+   <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -173,14 +172,11 @@
           <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
+                
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-              <span aria-hidden="true">×</span>
+              
             </button>
           </form>
           <!-- Navbar links -->
@@ -200,16 +196,19 @@
                 <i class="ni ni-zoom-split-in"></i>
               </a>
             </li>
+
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="{% static 'assets/img/theme/team-4.jpg' %}">
+                    <img alt="Image placeholder" src="../{{ photo_user }}">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">M. Palacios</span>
+                    <span class="mb-0 text-sm  font-weight-bold">{% for nom in liste_identifiants_user %}
+                    {{ nom }} 
+                  {% endfor %}</span>
                   </div>
                 </div>
               </a>
@@ -217,9 +216,9 @@
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Bienvenue !</h6>
                 </div>
-                <a href="profil" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>Mon profil</span>
+                <a href="https://docs.google.com/forms/d/154AnOi78N4VC5ahH2Uah9Ps76V_XkGXRmhS31qtOvwU/viewform?chromeless=1&edit_requested=true" class="dropdown-item">
+                  <i class="ni ni-support-16"></i>
+                  <span>Demander de l'aide</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="accounts/logout" class="dropdown-item">
@@ -233,19 +232,23 @@
       </div>
     </nav>
     <!-- Header -->
+    <!-- Header -->
     <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Articles</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Individu</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Articles</li>
+                  <li class="breadcrumb-item active" aria-current="page">Individu</li>
                 </ol>
               </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+              <a href="../creer_individu" class="btn btn-sm btn-neutral">Nouveau</a>
             </div>
           </div>
         </div>
@@ -276,39 +279,33 @@
           </div>
         </div>
       </div>
-      <!-- Footer -->
-      <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6">
-            <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2020 <a href="" class="font-weight-bold ml-1" target="_blank">Webee</a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Webee</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </footer>
-    </div>
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="{%  static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
-  <script src="{%  static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{%  static 'assets/vendor/js-cookie/js.cookie.js' %}"></script>
-  <script src="{%  static 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
-  <script src="{%  static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
-  <!-- Optional JS -->
-  <script src="{%  static 'assets/vendor/clipboard/dist/clipboard.min.js' %}"></script>
+   <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+   <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'%}"></script>
+   <script src="{% static 'assets/vendor/js-cookie/js.cookie.js'%}"></script>
+   <script src="{% static 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js'%}"></script>
+   <script src="{% static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js'%}"></script>
+   <!-- Optional JS -->
+    <script src="{% static 'assets/vendor/datatables.net/js/jquery.dataTables.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.html5.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.flash.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-buttons/js/buttons.print.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/datatables.net-select/js/dataTables.select.min.js'%}"></script>
+   <script type="text/javascript">
+    $(document).ready(function(){
+        $('#datatable-basic').DataTable();
+    });
+    </script>
+
   <!-- Argon JS -->
-  <script src="{%  static 'assets/js/argon.js?v=1.2.0' %}"></script>
+  <script src="{% static 'assets/js/argon.js' %}"></script>
+
+
 </body>
 
 </html>

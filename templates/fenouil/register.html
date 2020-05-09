@@ -136,6 +136,11 @@
   <script src="{%  static 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js'%}"></script>
   <!-- Argon JS -->
   <script src="{% static 'staticassets/js/argon.js?v=1.2.0'%}"></script>
+  <script type="text/javascript">
+    $(window).on('load',function(){
+        $('#myModal').modal('show');
+    });
+</script>
 </body>
 
 </html>

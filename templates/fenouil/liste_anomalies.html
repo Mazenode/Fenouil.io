@@ -85,7 +85,7 @@
             <ul class="navbar-nav mb-md-3">
               {% if 'Assistants de saisie' in liste_permissions or 'Administrateur de données' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="creer_individu/">
+                  <a class="nav-link" href="../creer_individu/">
                   <i class="ni ni-spaceship"></i>
                   <span class="nav-link-text">Cr&eacute;er un nouvel individu</span>
                   </a>
@@ -93,7 +93,7 @@
                {% endif %}
                {% if 'Prospection' in liste_permissions or 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="creer_cible_routage/1/">
+                  <a class="nav-link" href="../creer_cible_routage/1/">
                   <i class="ni ni-palette"></i>
                   <span class="nav-link-text">Cr&eacute;er une cible de routage</span>
                   </a>
@@ -101,7 +101,7 @@
                {% endif %}
                {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="liste_anomalies">
+                  <a class="nav-link" href="../liste_anomalies">
                   <i class="ni ni-ui-04"></i>
                   <span class="nav-link-text">Gestions anomalies</span>
                   </a>
@@ -113,13 +113,13 @@
                     <div class="collapse in" id="navbar-multilevel" style="">
                       <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                          <a href="envoi_mail" class="nav-link ">Envoi par mail</a>
+                          <a href="../envoi_mail" class="nav-link ">Envoi par mail</a>
                         </li>
                         <li class="nav-item">
-                          <a href="envoi_SMS" class="nav-link ">Envoi par SMS</a>
+                          <a href="../envoi_SMS" class="nav-link ">Envoi par SMS</a>
                         </li>
                         <li class="nav-item">
-                          <a href="envoi_papier" class="nav-link ">Envoi par papier</a>
+                          <a href="../envoi_papier" class="nav-link ">Envoi par papier</a>
                         </li>
                       </ul>
                     </div>
@@ -127,7 +127,7 @@
                   {% endif %}
                   {% if 'Directeur de la Stratégie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="valider_cible_routage">
+                  <a class="nav-link" href="../valider_cible_routage">
                   <i class="ni ni-check-bold"></i>
                   <span class="nav-link-text">Valider une cible de routage</span>
                   </a>
@@ -135,7 +135,7 @@
                {% endif %}
                {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="signaler_anomalie">
+                  <a class="nav-link" href="../signaler_anomalie">
                   <i class="ni ni-notification-70"></i>
                   <span class="nav-link-text">Signaler une anomalie</span>
                   </a>
@@ -143,7 +143,7 @@
                {% endif %}
                {% if 'Gestionnaire administratif' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                <li class="nav-item">
-                  <a class="nav-link" href="envoi_mail">
+                  <a class="nav-link" href="../envoi_mail">
                   <i class="ni ni-email-83"></i>
                   <span class="nav-link-text">Envoyer un mail</span>
                   </a>
@@ -151,7 +151,7 @@
                {% endif %}
                {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
                 <li class="nav-item">
-                  <a class="nav-link" href="saisir_commande">
+                  <a class="nav-link" href="../saisir_commande">
                   <i class="ni ni-cart"></i>
                   <span class="nav-link-text">Saisir une commande</span>
                   </a>
@@ -172,14 +172,11 @@
           <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
+                
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-              <span aria-hidden="true">×</span>
+              
             </button>
           </form>
           <!-- Navbar links -->
@@ -199,16 +196,19 @@
                 <i class="ni ni-zoom-split-in"></i>
               </a>
             </li>
+
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="{% static 'assets/img/theme/team-4.jpg' %}">
+                    <img alt="Image placeholder" src="../{{ photo_user }}">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">M. Palacios</span>
+                    <span class="mb-0 text-sm  font-weight-bold">{% for nom in liste_identifiants_user %}
+                    {{ nom }} 
+                  {% endfor %}</span>
                   </div>
                 </div>
               </a>
@@ -216,12 +216,12 @@
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Bienvenue !</h6>
                 </div>
-                <a href="profil" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>Mon profil</span>
+                <a href="https://docs.google.com/forms/d/154AnOi78N4VC5ahH2Uah9Ps76V_XkGXRmhS31qtOvwU/viewform?chromeless=1&edit_requested=true" class="dropdown-item">
+                  <i class="ni ni-support-16"></i>
+                  <span>Demander de l'aide</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="accounts/logout" class="dropdown-item">
+                <a href="../accounts/logout" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>

@@ -33,16 +33,18 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/argon.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'assets/css/random.css'%}" type="text/css">
 
 </head>
 
 <body>
+  
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
    <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
-         <a class="navbar-brand" href="https://www.figma.com/proto/Uxr7zMsCJDvOhhUIqDcbi2/Fenouil.io?node-id=6%3A0&scaling=min-zoom">
+         <a class="navbar-brand" href="accounts/logout">
          <img src="{% static 'assets/img/brand/blue.png' %}" class="navbar-brand-img" alt="...">
          </a>
       </div>
@@ -173,10 +175,7 @@
           <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
+                
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
@@ -207,7 +206,7 @@
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="{% static 'assets/img/theme/team-4.jpg' %}">
+                    <img alt="Image placeholder" src="{{ photo_user }}">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
                     <span class="mb-0 text-sm  font-weight-bold">{% for nom in liste_identifiants_user %}
@@ -220,7 +219,7 @@
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Bienvenue !</h6>
                 </div>
-                <a href="profil" class="dropdown-item">
+                <a href="https://docs.google.com/forms/d/154AnOi78N4VC5ahH2Uah9Ps76V_XkGXRmhS31qtOvwU/viewform?chromeless=1&edit_requested=true" class="dropdown-item">
                   <i class="ni ni-support-16"></i>
                   <span>Demander de l'aide</span>
                 </a>
@@ -278,7 +277,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Nouveaux clients</h5>
-                      <span class="h2 font-weight-bold mb-0">{{ nombre_nouveaux_clients }}</span>
+                      <span class="h2 font-weight-bold mb-0">{{ nombre_clients }}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -288,9 +287,9 @@
                   </div>
                   <p class="mt-3 mb-0 text-sm">
                      {% if ratio_client > 0 %}
-                      <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ ratio_client }}%</span>
+                      <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ ratio_clients }}%</span>
                       {% else %}
-                      <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i> -{{ ratio_client }}%</span>
+                      <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i> {{ ratio_clients }}%</span>
                       {% endif %}
                     <span class="text-nowrap">Depuis le mois dernier</span>
                   </p>
@@ -316,7 +315,7 @@
                     {% if ratio_commandes > 0 %}
                       <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ ratio_commandes }}%</span>
                       {% else %}
-                      <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i> -{{ ratio_commandes }}%</span>
+                      <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i> {{ ratio_commandes }}%</span>
                       {% endif %}
                     <span class="text-nowrap">Depuis le mois dernier</span>
                   </p>
@@ -410,82 +409,25 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Nom de l'article</th>
-                    <th scope="col">Quantité moyenne par achat</th>
                     <th scope="col">Ventes</th>
-                    <th scope="col">Evolution apr&egrave;s envoi de publicit&Eacute;s</th>
+                    <th scope="col">Bénéfices totaux</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for article in articles %}
                   <tr>
                     <th scope="row">
-                      Tondeuse &Eacute;lectrique
+                      {{ article.nom }}
                     </th>
                     <td>
-                      4,569
+                      {{ article.ventes }}
                     </td>
                     <td>
-                      340
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                      {{ article.benef }}€
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">
-                      Marchepied
-                    </th>
-                    <td>
-                      3,985
-                    </td>
-                    <td>
-                      319
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Pommeau de douche
-                    </th>
-                    <td>
-                      3,513
-                    </td>
-                    <td>
-                      294
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Salon bas de jardin
-                    </th>
-                    <td>
-                      2,050
-                    </td>
-                    <td>
-                      147
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Lot de 5 interrupteurs
-                    </th>
-                    <td>
-                      1,795
-                    </td>
-                    <td>
-                      190
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                    </td>
-                  </tr>
+                  {% endfor %}
+        
                 </tbody>
               </table>
             </div>
@@ -502,8 +444,8 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body">
-                 <img alt="Image placeholder" src="{% static 'assets/img/icons/pubs/pub-vintage-3.jpg'%}" style="width: 15em; margin-left: 20%">
+              <div class="card-body" style="align-items: center">
+                 <img alt="Image placeholder" src="{% static 'assets/img/icons/pubs/pub-vintage-3.jpg'%}" style="width: 100%" >
               </div>
             </div>
           </div>
@@ -531,6 +473,7 @@
       </footer>
     </div>
   </div>
+
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js'%}"></script>
@@ -543,6 +486,7 @@
   <script src="{% static 'assets/vendor/chart.js/dist/Chart.extension.js'%}"></script>
   <!-- Argon JS -->
   <script src="{% static 'assets/js/argon.js'%}"></script>
+  <script src="{% static 'assets/js/loader.js'%}"></script>
   <script>
 
 
@@ -650,7 +594,7 @@ var BarsChart = (function() {
 
      var derniersMois = {{ liste_6_mois|safe }};
   
-  var defaultData = {{ liste_envoi|safe }};
+  var defaultData = {{ liste_nb_pubs|safe }};
 
     // Create chart
     var ordersChart = new Chart($chart, {
@@ -659,7 +603,7 @@ var BarsChart = (function() {
         labels: derniersMois,
         datasets: [{
           label: 'Nb envois',
-          data: [25, 20, 30, 22, 17, 29]
+          data: defaultData,
         }]
       }
     });
