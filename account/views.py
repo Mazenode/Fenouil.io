@@ -27,7 +27,12 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect("/")
+            if not request.user.is_staff:
+                messages.info(request, "Votre compte n'a pas été validé, vous ne pouvez pas accéder à l'application.")
+                return redirect('login')
+            else:
+                return redirect("/")
+
         else:
             messages.info(request, "Le nom d'utilisateur ou le mot de passe est incorrect.")
             return redirect('login')
@@ -58,7 +63,8 @@ def register(request):
                         password=password2,
                     )
                     user.save();
-                    return redirect('/')
+                    messages.info(request, 'Votre compte à bien été crée. Attendez qu\'un administrateur valide votre compte pour accéder à l\'application')
+                return redirect('register')
             else:
                 messages.info(request, 'La charte n\' a pas été acceptée !')
                 return redirect('register')
