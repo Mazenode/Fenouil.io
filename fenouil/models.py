@@ -26,13 +26,18 @@ class Individu(models.Model):
     caracteristique_comm = models.CharField(max_length=50)
     date = models.DateTimeField('Date naissance', default=None)
     nom_complet = models.CharField(max_length=100)
-    date_passage_client = models.DateTimeField('Date creation client', default=None,null=True, blank=True)
+    date_passage_client = models.DateTimeField('Date creation client', default="",null=True, blank=True)
 
     def __str__(self):
         return self.prenom + " " + self.nom
 
+class DernieresPublicites(models.Model):
+    titre = models.CharField(max_length=100)
+    photo = models.ImageField(null=True, blank=True)
+    pub_date = models.DateTimeField('Date de publication', default=None)
+
 class Envoi(models.Model):
-    date_envoi = models.DateTimeField('Date d\'envoi', default=None)
+    date_pub = models.DateTimeField('Date', default=None)
 
 class Mail(models.Model):
     contenu = RichTextField(verbose_name="")
