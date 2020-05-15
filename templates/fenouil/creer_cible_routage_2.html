@@ -22,7 +22,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Accueil</title>
+  <title>Outils - Créer une cible de routage 2/2</title>
   <!-- Favicon -->
   <link rel="icon" href="{% static 'assets/img/brand/favicon.png'%}" type="image/png">
   <!-- Fonts -->
@@ -131,14 +131,6 @@
                   <a class="nav-link" href="../../valider_cible_routage">
                   <i class="ni ni-check-bold"></i>
                   <span class="nav-link-text">Valider une cible de routage</span>
-                  </a>
-               </li>
-               {% endif %}
-               {% if 'Assistants de saisie' in liste_permissions or 'Super Utilisateur' in liste_permissions %}
-               <li class="nav-item">
-                  <a class="nav-link" href="../../signaler_anomalie">
-                  <i class="ni ni-notification-70"></i>
-                  <span class="nav-link-text">Signaler une anomalie</span>
                   </a>
                </li>
                {% endif %}

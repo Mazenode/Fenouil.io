@@ -18,7 +18,6 @@ urlpatterns = [
     path('creer_cible_routage/<int:etape>/', views.creer_cible_routage, name='creer_cible_routage'),
     path('valider_cible_routage/', views.valider_cible_routage, name='valider_cible_routage'),
     path('saisir_commande/', views.saisir_commande, name='saisir_commande'),
-    path('signaler_anomalie/', views.signaler_anomalie, name='signaler_anomalie'),
     path('accounts/', include('account.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]

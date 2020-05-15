@@ -6,8 +6,9 @@ from django.db.models import Max
 from django.contrib import messages
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from fenouil.models import Item, Individu, Anomalie, CibleRoutage, ItemCommande, Commande, CommandeCheque, CommandeCarteBancaire, Envoi, UserProfile
+from fenouil.models import Item, Individu, Anomalie, CibleRoutage, ItemCommande, Commande, CommandeCheque, CommandeCarteBancaire, Envoi, UserProfile, DernieresPublicites
 from fenouil.forms import MailForm
+from itertools import chain
 import boto3
 import smtplib
 from email.message import EmailMessage
@@ -82,7 +83,6 @@ def accueil(request):
         for commande in commandes_cheque:
             if (commande.pub_date.month != timezone.now().month):
                 nombre_commandes_anciennes += 1
-
             else:
                 nombre_commandes_recentes += 1
 
@@ -136,7 +136,8 @@ def accueil(request):
             liste_benef_carte.append(total)
 
         liste_benef = [x + y for x, y in zip(liste_benef_cheque, liste_benef_carte)]
-
+        ratio_benef = getPourcentage(liste_benef[-1],liste_benef[-2])
+        
         valeur = liste_benef[6:8]
         liste_benef.insert(0, valeur[0])
         liste_benef.insert(1, valeur[1])
@@ -163,6 +164,8 @@ def accueil(request):
 
         json_nb_pubs = json.dumps(liste_nb_pubs)
 
+        derniere_pub = DernieresPublicites.objects.order_by('-pub_date').first()
+
         return render(request, 'fenouil/dashboard.html',
             { 
                 'nombre_anomalies': nombre_anomalies_recentes, 
@@ -179,11 +182,17 @@ def accueil(request):
                 'liste_identifiants_user':getNomUser(request),
                 'photo_user':getPhotoUser(request),
                 'articles':getArticlesLesPlusVendus(),
+                'benef':liste_benef[-3],
+                'ratio_benef':getPourcentage(liste_benef[-3], liste_benef[-4]),
+                'nom_derniere_pub': derniere_pub.titre,
+                'photo_derniere_pub': 'media/Publicites/'+derniere_pub.photo.name,
             })
 
-
 def getPourcentage(recent, ancien):
-    return ((recent - ancien)/ ancien) * 100
+    if (recent != 0 and ancien !=0):
+        return ((recent - ancien)/ ancien) * 100
+    else : 
+        return 0
 
 def articles(request):
     if not request.user.is_staff:
@@ -211,6 +220,9 @@ def envoi_mail(request):
     if not request.user.is_staff:
         return render(request, 'fenouil/accueil.html')
     else:
+        commandes_cheque_invalides = CommandeCheque.objects.filter(valide= 'En attente') 
+        commandes_carte_invalides = CommandeCarteBancaire.objects.filter(valide= 'En attente') 
+
         if request.method == 'POST':
             form = MailForm(request.POST)
             if form.is_valid():
@@ -219,14 +231,14 @@ def envoi_mail(request):
                 if request.POST.get('mail2') == "Ou choisir le mail d'un de vos clients":
                     if request.POST.get('mail') == "":
                         messages.info(request, 'Vous devez entrer au moins un numéro de téléphone !')
-                        return redirect('envoi_mail_form')
+                        return redirect('envoi_mail')
                     else :
                         addr = request.POST.get('mail')
 
                 #On vérifie que l'utilisateur n'a pas entré plus d'un mail
                 elif request.POST.get('mail2') != "Ou choisir le mail d'un de vos clients" and request.POST.get('mail') != "":
                     messages.info(request, 'Vous avez entrer deux mail différents !')
-                    return redirect('envoi_mail_form')
+                    return redirect('envoi_mail')
 
                 #Sinon, on valide.
                 else:
@@ -235,7 +247,7 @@ def envoi_mail(request):
                 #On vérifie qu'un numéro à été rentré
                 if request.POST.get('num') == "Numéro de la publicité":
                     messages.info(request, 'Le numéro de la publicité n\'a pas été rentrée !')
-                    return redirect('envoi_mail_form')
+                    return redirect('envoi_mail')
                 else :
                     num = request.POST.get('num')
 
@@ -279,6 +291,9 @@ def envoi_mail(request):
             'liste_permissions':getPermissionsUser(request),
             'liste_identifiants_user':getNomUser(request),
             'photo_user':getPhotoUser(request),
+            'commandes_cheque':commandes_cheque_invalides,
+            'commandes_carte':commandes_carte_invalides,
+            'individus':individus,
             })
 
 def envoi_SMS(request):
@@ -485,31 +500,6 @@ def liste_anomalies(request):
                 'liste_identifiants_user':getNomUser(request),
                 'photo_user':getPhotoUser(request),})
         
-def signaler_anomalie(request):
-    if not request.user.is_staff:
-        return render(request, 'fenouil/accueil.html')
-    else:
-        if request.method == 'POST':
-
-            anomalie = Anomalie(
-                num_commande = request.POST.get('num'), 
-                statut = request.POST.get('statut'), 
-                description = request.POST.get('texte'),
-                pub_date = timezone.now()
-                )
-
-            anomalie.save()
-
-            return render(request, 'fenouil/signaler_anomalie.html',{
-                'liste_permissions':getPermissionsUser(request),
-                'liste_identifiants_user':getNomUser(request),
-                'photo_user':getPhotoUser(request),})
-
-        else :
-            return render(request, 'fenouil/signaler_anomalie.html',{
-                'liste_permissions':getPermissionsUser(request),
-                'liste_identifiants_user':getNomUser(request),
-                'photo_user':getPhotoUser(request),})
 
 def creer_cible_routage(request, etape):
 
